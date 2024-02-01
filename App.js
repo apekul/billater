@@ -2,8 +2,8 @@ import React from "react";
 import CreateAcc from "./Components/CreateAcc";
 import Home from "./Components/Home";
 import Event from "./Components/Event";
-import { Button, StyleSheet } from "react-native";
-
+import { StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
@@ -31,15 +31,16 @@ export default function App() {
                 : "Home",
             headerLeft: null,
             headerRight: () => (
-              <Button
-                style={styles.btn}
+              <Icon
+                name="logout"
+                size={20}
+                color="black"
+                style={{ marginRight: 20 }}
                 onPress={() => {
                   // Perform logout action here
                   // setName("");
                   navigation.navigate("Login");
                 }}
-                title="Log Out"
-                // color="red"
               />
             ),
           })}
