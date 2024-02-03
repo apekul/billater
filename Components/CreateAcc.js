@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 
-const screenHeight = Dimensions.get("window").height;
+// const screenHeight = Dimensions.get("window").height;
 
 const CreateAcc = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -46,13 +46,12 @@ const CreateAcc = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: screenHeight * 0.5,
+    flex: 1,
     marginLeft: 16,
     marginRight: 16,
     marginTop: 25,
   },
   group: {
-    flex: 1,
     marginTop: 20,
     justifyContent: "space-between",
   },
