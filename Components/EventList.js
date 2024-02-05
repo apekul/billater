@@ -10,21 +10,17 @@ import {
 } from "react-native";
 import IconAnt from "react-native-vector-icons/AntDesign";
 import IconMat from "react-native-vector-icons/MaterialIcons";
+import moment from "moment";
 
-const fakeItems = [
-  { id: 1, title: "Beer", ppl: 3, value: {}, date: "02.02.2024" },
-  { id: 2, title: "Kebab", ppl: 3, value: {}, date: "01.02.2024" },
-  { id: 3, title: "Food", ppl: 3, value: {}, date: "10.01.2024" },
-  { id: 4, title: "Food", ppl: 3, value: {}, date: "10.01.2024" },
-];
 const EventList = () => {
-  const [events, setEvents] = useState(fakeItems);
+  const [events, setEvents] = useState([]);
 
   const addNewEvent = () => {
     const newID = Math.max(events.map((v) => v.id)) + 1;
+    const newTitle = `Event Created ${moment(new Date()).format("h:mm a")}`;
     const newItem = {
       id: newID,
-      title: "sampleName",
+      title: newTitle,
       ppl: 3,
       value: {},
       date: new Date(),
@@ -33,8 +29,7 @@ const EventList = () => {
   };
 
   const groupedItems = events.reduce((acc, event) => {
-    const date = event.date;
-
+    const date = moment(event.date).format("MMMM Do YYYY");
     if (!acc[date]) {
       acc[date] = [];
     }
@@ -58,32 +53,36 @@ const EventList = () => {
       </TouchableHighlight>
       {/* Event */}
       <ScrollView>
-        {Object.entries(groupedItems).map(([date, events], i) => (
-          <View key={i} style={{ marginBottom: 10 }}>
-            <View style={styles.dateBar}>
-              <Text style={{ paddingHorizontal: 10, fontWeight: "bold" }}>
-                {date}
-              </Text>
-            </View>
+        {events.length > 0 ? (
+          Object.entries(groupedItems).map(([date, events], i) => (
+            <View key={i} style={{ marginBottom: 10 }}>
+              <View style={styles.dateBar}>
+                <Text style={{ paddingHorizontal: 10, fontWeight: "bold" }}>
+                  {date}
+                </Text>
+              </View>
 
-            {events.map((event, j) => (
-              <View key={j} style={[styles.group, { marginVertical: 10 }]}>
-                <View style={[styles.group, { gap: 10 }]}>
-                  <View style={styles.icon}></View>
+              {events.map((event, j) => (
+                <View key={j} style={[styles.group, { marginVertical: 10 }]}>
+                  <View style={[styles.group, { gap: 10 }]}>
+                    <View style={styles.icon}></View>
+                    <View>
+                      <Text style={{ fontWeight: "bold" }}>{event.title}</Text>
+                      <Text>{event.ppl} participant</Text>
+                    </View>
+                  </View>
+
                   <View>
-                    <Text style={{ fontWeight: "bold" }}>{event.title}</Text>
-                    <Text>{event.ppl} participant</Text>
+                    <Text>balance</Text>
+                    <Text>$20</Text>
                   </View>
                 </View>
-
-                <View>
-                  <Text>balance</Text>
-                  <Text>$20</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        ))}
+              ))}
+            </View>
+          ))
+        ) : (
+          <Text>No items</Text>
+        )}
       </ScrollView>
     </View>
   );
