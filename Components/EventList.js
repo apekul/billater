@@ -1,32 +1,12 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Alert,
-  StyleSheet,
-  TouchableHighlight,
-} from "react-native";
-import IconAnt from "react-native-vector-icons/AntDesign";
+import React, { useContext } from "react";
+import { View, Text, ScrollView, TouchableHighlight } from "react-native";
 import IconMat from "react-native-vector-icons/MaterialIcons";
+import { stylesEvent } from "../styles/style";
 import moment from "moment";
+import { EventContext } from "../context";
 
-const EventList = () => {
-  const [events, setEvents] = useState([]);
-
-  const addNewEvent = () => {
-    const newID = Math.max(events.map((v) => v.id)) + 1;
-    const newTitle = `Event Created ${moment(new Date()).format("h:mm a")}`;
-    const newItem = {
-      id: newID,
-      title: newTitle,
-      ppl: 3,
-      value: {},
-      date: new Date(),
-    };
-    setEvents((prev) => [...prev, newItem]);
-  };
+const EventList = ({ navigation }) => {
+  const { events, setEvents } = useContext(EventContext);
 
   const groupedItems = events.reduce((acc, event) => {
     const date = moment(event.date).format("MMMM Do YYYY");
@@ -44,9 +24,10 @@ const EventList = () => {
       <TouchableHighlight
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
-        style={[styles.btn]}
+        style={[stylesEvent.btn]}
         onPress={() => {
-          return addNewEvent();
+          // return addNewEvent();
+          return navigation.navigate("CreateEvent");
         }}
       >
         <IconMat name="add-box" size={40} color="#898A8D" />
@@ -56,16 +37,19 @@ const EventList = () => {
         {events.length > 0 ? (
           Object.entries(groupedItems).map(([date, events], i) => (
             <View key={i} style={{ marginBottom: 10 }}>
-              <View style={styles.dateBar}>
+              <View style={stylesEvent.dateBar}>
                 <Text style={{ paddingHorizontal: 10, fontWeight: "bold" }}>
                   {date}
                 </Text>
               </View>
 
               {events.map((event, j) => (
-                <View key={j} style={[styles.group, { marginVertical: 10 }]}>
-                  <View style={[styles.group, { gap: 10 }]}>
-                    <View style={styles.icon}></View>
+                <View
+                  key={j}
+                  style={[stylesEvent.group, { marginVertical: 10 }]}
+                >
+                  <View style={[stylesEvent.group, { gap: 10 }]}>
+                    <View style={stylesEvent.icon}></View>
                     <View>
                       <Text style={{ fontWeight: "bold" }}>{event.title}</Text>
                       <Text>{event.ppl} participant</Text>
@@ -89,26 +73,3 @@ const EventList = () => {
 };
 
 export default EventList;
-const styles = StyleSheet.create({
-  dateBar: {
-    backgroundColor: "#EFEFEF",
-    borderRadius: 10,
-    padding: 3,
-  },
-  icon: {
-    width: 40,
-    height: 40,
-    backgroundColor: "#898A8D",
-    borderRadius: 5,
-  },
-  group: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  btn: {
-    backgroundColor: "#EFEFEF",
-    borderRadius: 5,
-    alignItems: "center",
-  },
-});
