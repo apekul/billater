@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   Text,
   View,
@@ -7,9 +7,10 @@ import {
   SafeAreaView,
 } from "react-native";
 import { stylesLogin } from "../styles/style";
+import { EventContext } from "../context";
 
 const CreateAcc = ({ navigation }) => {
-  const [name, setName] = useState("");
+  const { user, setUser } = useContext(EventContext);
 
   return (
     <SafeAreaView style={stylesLogin.container}>
@@ -19,10 +20,10 @@ const CreateAcc = ({ navigation }) => {
           <TextInput
             underlineColorAndroid="transparent"
             style={stylesLogin.textInput}
-            value={name}
+            value={user}
             placeholder="Name..."
             placeholderTextColor="#BDBDBD"
-            onChangeText={(newText) => setName(newText)}
+            onChangeText={(newText) => setUser(newText)}
           />
         </View>
         <TouchableHighlight
@@ -30,7 +31,9 @@ const CreateAcc = ({ navigation }) => {
           underlayColor="#DDDDDD"
           style={stylesLogin.button}
           onPress={() => {
-            return navigation.navigate("Home", { name });
+            if (user.length > 0) {
+              return navigation.navigate("Home");
+            }
           }}
         >
           <Text style={stylesLogin.btnText}>APPLY</Text>

@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { EventContext } from "./context";
+import { TouchableOpacity, Text } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -20,21 +21,19 @@ const MyTheme = {
 };
 
 export default function App() {
+  const [user, setUser] = useState("");
   const [events, setEvents] = useState([]);
 
   return (
     <NavigationContainer theme={MyTheme}>
-      <EventContext.Provider value={{ events, setEvents }}>
+      <EventContext.Provider value={{ events, setEvents, user, setUser }}>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={CreateAcc} />
           <Stack.Screen
             name="Home"
             component={Home}
             options={({ route, navigation }) => ({
-              title:
-                route.params && route.params.name
-                  ? "Logged as " + route.params.name
-                  : "Home",
+              title: user ? "Logged as " + user : "Home",
               headerLeft: null,
               headerRight: () => (
                 <Icon
@@ -51,7 +50,25 @@ export default function App() {
               ),
             })}
           />
-          <Stack.Screen name="Event" component={Event} />
+          <Stack.Screen
+            name="Event"
+            component={Event}
+            options={({ route, navigation }) => ({
+              title: "Event",
+              // title: events.find((event) => event.id === route.params.id).title,
+              headerLeft: () => (
+                <Icon
+                  name="arrowleft"
+                  size={23}
+                  color="black"
+                  style={{ marginLeft: 15, marginRight: 15 }}
+                  onPress={() => {
+                    navigation.navigate("Home");
+                  }}
+                />
+              ),
+            })}
+          />
           <Stack.Screen name="CreateEvent" component={CreateEvent} />
         </Stack.Navigator>
       </EventContext.Provider>

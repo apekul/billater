@@ -65,7 +65,7 @@ export const stylesEvent = StyleSheet.create({
     flex: 1,
     marginLeft: 16,
     marginRight: 16,
-    gap: 20,
+    gap: 10,
   },
   textInput: {
     height: 40,
@@ -96,5 +96,15 @@ export const stylesEvent = StyleSheet.create({
     backgroundColor: "#EFEFEF",
     borderRadius: 5,
     alignItems: "center",
+  },
+  button: {
+    borderRadius: 50,
+    backgroundColor: "#5DB075",
+    padding: 10,
+  },
+  btnText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

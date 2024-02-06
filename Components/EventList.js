@@ -44,23 +44,32 @@ const EventList = ({ navigation }) => {
               </View>
 
               {events.map((event, j) => (
-                <View
+                <TouchableHighlight
                   key={j}
-                  style={[stylesEvent.group, { marginVertical: 10 }]}
+                  activeOpacity={0.6}
+                  underlayColor="#DDDDDD"
+                  style={{ marginVertical: 10 }}
+                  onPress={() => {
+                    return navigation.navigate("Event", { id: event.id });
+                  }}
                 >
-                  <View style={[stylesEvent.group, { gap: 10 }]}>
-                    <View style={stylesEvent.icon}></View>
+                  <View style={[stylesEvent.group]}>
+                    <View style={[stylesEvent.group, { gap: 10 }]}>
+                      <View style={stylesEvent.icon}></View>
+                      <View>
+                        <Text style={{ fontWeight: "bold" }}>
+                          {event.title}
+                        </Text>
+                        <Text>{event.ppl} participant</Text>
+                      </View>
+                    </View>
+
                     <View>
-                      <Text style={{ fontWeight: "bold" }}>{event.title}</Text>
-                      <Text>{event.ppl} participant</Text>
+                      <Text>balance</Text>
+                      <Text>$20</Text>
                     </View>
                   </View>
-
-                  <View>
-                    <Text>balance</Text>
-                    <Text>$20</Text>
-                  </View>
-                </View>
+                </TouchableHighlight>
               ))}
             </View>
           ))
