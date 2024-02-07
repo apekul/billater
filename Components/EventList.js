@@ -58,7 +58,7 @@ const EventList = ({ navigation }) => {
                       <View style={stylesEvent.icon}></View>
                       <View>
                         <Text style={{ fontWeight: "bold" }}>
-                          {event.title}
+                          {event.title ? event.title : "No title"}
                         </Text>
                         <Text>{event.ppl} participant</Text>
                       </View>

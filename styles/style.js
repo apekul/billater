@@ -108,3 +108,32 @@ export const stylesEvent = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+export const stylesActivitie = StyleSheet.create({
+  txtBold: {
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  group: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  container: {
+    gap: 10,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  button: {
+    borderRadius: 50,
+    backgroundColor: "#5DB075",
+    padding: 10,
+  },
+  btnText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});

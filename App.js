@@ -8,7 +8,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { EventContext } from "./context";
-import { TouchableOpacity, Text } from "react-native";
+import CreateActivity from "./Components/CreateActivity";
 
 const Stack = createStackNavigator();
 
@@ -70,6 +70,7 @@ export default function App() {
             })}
           />
           <Stack.Screen name="CreateEvent" component={CreateEvent} />
+          <Stack.Screen name="CreateActivity" component={CreateActivity} />
         </Stack.Navigator>
       </EventContext.Provider>
     </NavigationContainer>

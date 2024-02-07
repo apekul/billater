@@ -25,11 +25,7 @@ const CreateEvent = ({ navigation }) => {
       id: newID,
       title: title,
       ppl: 3,
-      value: {
-        [user]: {
-          items: [],
-        },
-      },
+      value: [],
       date: date,
     };
     setEvents((prev) => [...prev, newItem]);
@@ -93,7 +89,7 @@ const CreateEvent = ({ navigation }) => {
       <TouchableHighlight
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
-        style={stylesEvent.button}
+        style={[stylesEvent.button, { marginTop: 20 }]}
         onPress={() => {
           addNewEvent();
           return navigation.navigate("Event", { id: newID });
