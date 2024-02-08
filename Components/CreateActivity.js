@@ -1,8 +1,55 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TextInput, TouchableHighlight } from "react-native";
 import { stylesActivitie } from "../styles/style";
 import { stylesEvent } from "../styles/style";
-const CreateActivity = () => {
+import { EventContext } from "../context";
+const CreateActivity = ({ route, navigation }) => {
+  const { events, setEvents, user } = useContext(EventContext);
+
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState();
+  const [buyer, setBuyer] = useState(user);
+  const [forWho, setForWho] = useState("");
+  // {
+  //   buyer: "John Wick",
+  //   items: [
+  //     {
+  //       name: "Kebab",
+  //       price: 20,
+  //       receipient: "Micha Dzik",
+  //     },
+  //     {
+  //       name: "Piwo",
+  //       price: 30,
+  //       receipient: "Jhon Doe",
+  //     },
+  //   ],
+  //   total: 50,
+  // },
+  const addNewAct = () => {
+    const id = route.params.id;
+    const newAct = {
+      buyer: buyer,
+      items: [
+        {
+          name: title,
+          price: price,
+          receipient: forWho,
+        },
+      ],
+      total: price,
+    };
+    // Update array inside event (route.params.id) value (array)
+    setEvents((prev) => {
+      return prev.map((item) => {
+        if (item.id === id) {
+          return { ...item, value: [...item.value, newAct] };
+        }
+        return item;
+      });
+    });
+  };
+
   return (
     <View style={stylesEvent.container}>
       {/* Set Title */}
@@ -11,10 +58,10 @@ const CreateActivity = () => {
         <TextInput
           underlineColorAndroid="transparent"
           style={stylesEvent.textInput}
-          // value={title}
+          value={title}
           placeholder="Title..."
           placeholderTextColor="#BDBDBD"
-          // onChangeText={(newText) => setTitle(newText)}
+          onChangeText={(newText) => setTitle(newText)}
         />
       </View>
 
@@ -24,10 +71,11 @@ const CreateActivity = () => {
         <TextInput
           underlineColorAndroid="transparent"
           style={stylesEvent.textInput}
-          // value={title}
+          value={price}
           placeholder="Price..."
+          keyboardType="numeric"
           placeholderTextColor="#BDBDBD"
-          // onChangeText={(newText) => setTitle(newText)}
+          onChangeText={(newPrice) => setPrice(newPrice)}
         />
       </View>
 
@@ -45,10 +93,10 @@ const CreateActivity = () => {
           <TextInput
             underlineColorAndroid="transparent"
             style={stylesEvent.textInput}
-            // value={title}
+            value={buyer}
             placeholder="Buyer..."
             placeholderTextColor="#BDBDBD"
-            // onChangeText={(newText) => setTitle(newText)}
+            onChangeText={(newBuyer) => setBuyer(newBuyer)}
           />
         </View>
         <View style={{ flex: 1 }}>
@@ -56,10 +104,10 @@ const CreateActivity = () => {
           <TextInput
             underlineColorAndroid="transparent"
             style={stylesEvent.textInput}
-            // value={title}
+            value={forWho}
             placeholder="For..."
             placeholderTextColor="#BDBDBD"
-            // onChangeText={(newText) => setTitle(newText)}
+            onChangeText={(newForWho) => setForWho(newForWho)}
           />
         </View>
       </View>
@@ -69,8 +117,8 @@ const CreateActivity = () => {
         underlayColor="#DDDDDD"
         style={[stylesActivitie.button, { marginTop: 20 }]}
         onPress={() => {
-          // addNewEvent();
-          // return navigation.navigate("Event", { id: newID });
+          addNewAct();
+          return navigation.navigate("Event", { id: route.params.id });
         }}
       >
         <Text style={stylesActivitie.btnText}>CREATE</Text>
