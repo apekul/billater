@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import CreateAcc from "./Components/CreateAcc";
 import Home from "./Components/Home";
@@ -9,6 +9,8 @@ import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { EventContext } from "./context";
 import CreateActivity from "./Components/CreateActivity";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +26,30 @@ export default function App() {
   const [user, setUser] = useState("");
   const [events, setEvents] = useState([]);
 
+  const retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      if (value !== null) {
+        console.log("Retrieved data:", value);
+      } else {
+        console.log("No data found for the key!");
+      }
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+  };
+  useEffect(() => {
+    const saveData = async () => {
+      try {
+        await AsyncStorage.setItem("user", user);
+        console.log("Data saved successfully!");
+      } catch (error) {
+        console.error("Error saving data:", error);
+      }
+    };
+    saveData();
+  }, [user]);
+  retrieveData();
   return (
     <NavigationContainer theme={MyTheme}>
       <EventContext.Provider value={{ events, setEvents, user, setUser }}>
