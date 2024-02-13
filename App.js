@@ -26,30 +26,63 @@ export default function App() {
   const [user, setUser] = useState("");
   const [events, setEvents] = useState([]);
 
+  // Define a function to retrieve user and events data from AsyncStorage
   const retrieveData = async () => {
     try {
-      const value = await AsyncStorage.getItem("user");
-      if (value !== null) {
-        console.log("Retrieved data:", value);
-      } else {
-        console.log("No data found for the key!");
+      // Retrieve user data
+      const userValue = await AsyncStorage.getItem("user");
+      if (userValue !== null) {
+        console.log("User:", userValue);
+        setUser(userValue);
+      }
+
+      // Retrieve events data
+      const eventsValue = await AsyncStorage.getItem("events");
+      if (eventsValue !== null) {
+        console.log("Events:", eventsValue);
+        setEvents(JSON.parse(eventsValue));
       }
     } catch (error) {
+      // Error handling
       console.error("Error retrieving data:", error);
     }
   };
+
+  // Define a function to store user data
+  const storeUser = async (userData) => {
+    try {
+      await AsyncStorage.setItem("user", userData);
+      // console.log("User data stored successfully");
+    } catch (error) {
+      console.error("Error storing user data:", error);
+    }
+  };
+
+  // Define a function to store events data
+  const storeEvents = async (eventsData) => {
+    try {
+      const jsonValue = JSON.stringify(eventsData);
+      await AsyncStorage.setItem("events", jsonValue);
+      // console.log("Events data stored successfully");
+    } catch (error) {
+      console.error("Error storing events data:", error);
+    }
+  };
+
   useEffect(() => {
-    const saveData = async () => {
-      try {
-        await AsyncStorage.setItem("user", user);
-        console.log("Data saved successfully!");
-      } catch (error) {
-        console.error("Error saving data:", error);
-      }
-    };
-    saveData();
-  }, [user]);
-  retrieveData();
+    retrieveData();
+  }, []); // Empty dependency array ensures useEffect runs only once on mount
+  // useEffect hook to store user data whenever it changes
+  useEffect(() => {
+    storeUser(user);
+  }, [user]); // Run this effect whenever user changes
+
+  // useEffect hook to store events data whenever it changes
+  useEffect(() => {
+    storeEvents(events);
+  }, [events]); // Run this effect whenever events changes
+  // useEffect hook to retrieve data on component mount
+
   return (
     <NavigationContainer theme={MyTheme}>
       <EventContext.Provider value={{ events, setEvents, user, setUser }}>
