@@ -24,7 +24,7 @@ const MyTheme = {
 
 export default function App() {
   const [user, setUser] = useState("");
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(null);
 
   // Define a function to retrieve user and events data from AsyncStorage
   const retrieveData = async () => {
@@ -39,9 +39,8 @@ export default function App() {
       // Retrieve events data
       const eventsValue = await AsyncStorage.getItem("events");
       if (eventsValue !== null) {
-        console.log("Events:", eventsValue);
         setEvents(JSON.parse(eventsValue));
-      }
+      } else setEvents([]);
     } catch (error) {
       // Error handling
       console.error("Error retrieving data:", error);
@@ -62,8 +61,10 @@ export default function App() {
   const storeEvents = async (eventsData) => {
     try {
       const jsonValue = JSON.stringify(eventsData);
-      await AsyncStorage.setItem("events", jsonValue);
-      // console.log("Events data stored successfully");
+      if (events !== null) {
+        await AsyncStorage.setItem("events", jsonValue);
+        // console.log("Events data stored successfully", jsonValue);
+      }
     } catch (error) {
       console.error("Error storing events data:", error);
     }
