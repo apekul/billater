@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "react-native-gesture-handler";
+import Icon from "react-native-vector-icons/AntDesign";
+
+// Components
+import CreateEvent from "./Components/CreateEvent";
+import CreateActivity from "./Components/CreateActivity";
 import CreateAcc from "./Components/CreateAcc";
 import Home from "./Components/Home";
 import Event from "./Components/Event";
-import CreateEvent from "./Components/CreateEvent";
-import Icon from "react-native-vector-icons/AntDesign";
+import Loading from "./Components/Loading";
+
+// Context
+import { EventContext } from "./context";
+
+// Navigation
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { EventContext } from "./context";
-import CreateActivity from "./Components/CreateActivity";
 
+// Storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
@@ -25,6 +33,7 @@ const MyTheme = {
 export default function App() {
   const [user, setUser] = useState("");
   const [events, setEvents] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Define a function to retrieve user and events data from AsyncStorage
   const retrieveData = async () => {
@@ -32,7 +41,7 @@ export default function App() {
       // Retrieve user data
       const userValue = await AsyncStorage.getItem("user");
       if (userValue !== null) {
-        console.log("User:", userValue);
+        // console.log("User:", userValue);
         setUser(userValue);
       }
 
@@ -44,18 +53,21 @@ export default function App() {
     } catch (error) {
       // Error handling
       console.error("Error retrieving data:", error);
+    } finally {
+      // Update loading state
+      setIsLoading(false);
     }
   };
 
-  // Define a function to store user data
-  const storeUser = async (userData) => {
-    try {
-      await AsyncStorage.setItem("user", userData);
-      // console.log("User data stored successfully");
-    } catch (error) {
-      console.error("Error storing user data:", error);
-    }
-  };
+  // // Define a function to store user data
+  // const storeUser = async (userData) => {
+  //   try {
+  //     await AsyncStorage.setItem("user", userData);
+  //     // console.log("User data stored successfully");
+  //   } catch (error) {
+  //     console.error("Error storing user data:", error);
+  //   }
+  // };
 
   // Define a function to store events data
   const storeEvents = async (eventsData) => {
@@ -74,9 +86,11 @@ export default function App() {
     retrieveData();
   }, []); // Empty dependency array ensures useEffect runs only once on mount
   // useEffect hook to store user data whenever it changes
-  useEffect(() => {
-    storeUser(user);
-  }, [user]); // Run this effect whenever user changes
+
+  // Instead, update storage when cliced Apply
+  // useEffect(() => {
+  //   storeUser(user);
+  // }, [user]); // Run this effect whenever user changes
 
   // useEffect hook to store events data whenever it changes
   useEffect(() => {
@@ -85,31 +99,43 @@ export default function App() {
   // useEffect hook to retrieve data on component mount
 
   return (
-    <NavigationContainer theme={MyTheme}>
-      <EventContext.Provider value={{ events, setEvents, user, setUser }}>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={CreateAcc} />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={({ route, navigation }) => ({
-              title: user ? "Logged as " + user : "Home",
-              headerLeft: null,
-              headerRight: () => (
-                <Icon
-                  name="logout"
-                  size={20}
-                  color="black"
-                  style={{ marginRight: 20 }}
-                  onPress={() => {
-                    // Perform logout action here
-                    // setName("");
-                    navigation.navigate("Login");
-                  }}
-                />
-              ),
-            })}
-          />
+    <EventContext.Provider value={{ events, setEvents, user, setUser }}>
+      <NavigationContainer theme={MyTheme}>
+        <Stack.Navigator>
+          {isLoading ? (
+            // Show a loading screen or indicator while retrieving user data
+            // You can customize this according to your UI/UX design
+            <Stack.Screen
+              name="Loading"
+              component={Loading}
+              options={{ headerShown: false }}
+            />
+          ) : user ? (
+            // If user data is available, navigate to the Home screen
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={({ navigation }) => ({
+                title: user ? "Logged as " + user : "Home",
+                headerLeft: null,
+                headerRight: () => (
+                  <Icon
+                    name="logout"
+                    size={20}
+                    color="black"
+                    style={{ marginRight: 20 }}
+                    onPress={() => {
+                      setUser("");
+                    }}
+                  />
+                ),
+              })}
+            />
+          ) : (
+            // If no user data is found, navigate to the authentication screen
+            <Stack.Screen name="Login" component={CreateAcc} />
+          )}
+
           <Stack.Screen
             name="Event"
             component={Event}
@@ -132,7 +158,7 @@ export default function App() {
           <Stack.Screen name="CreateEvent" component={CreateEvent} />
           <Stack.Screen name="CreateActivity" component={CreateActivity} />
         </Stack.Navigator>
-      </EventContext.Provider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </EventContext.Provider>
   );
 }

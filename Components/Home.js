@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import EventList from "./EventList";
 import { stylesHome } from "../styles/style";
 
@@ -9,6 +9,7 @@ const Home = ({ navigation }) => {
     { txt: "you are owed", value: 10, color: "#24CE85" },
     { txt: "balance", value: 0, color: "#898A8D" },
   ]);
+
   return (
     <SafeAreaView style={stylesHome.container}>
       <View style={stylesHome.list}>

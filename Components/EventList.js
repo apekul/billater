@@ -18,6 +18,18 @@ const EventList = ({ navigation }) => {
 
     return acc;
   }, {});
+
+  // {
+  //   buyer: buyer,
+  //   items: [
+  //     {
+  //       name: title,
+  //       price: price,
+  //       receipient: forWho,
+  //     },
+  //   ],
+  //   total: price,
+  // }
   return (
     <View style={{ flex: 1, gap: 20 }}>
       {/* Add event Button */}

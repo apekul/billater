@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -9,8 +9,39 @@ import {
 import { stylesLogin } from "../styles/style";
 import { EventContext } from "../context";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const CreateAcc = ({ navigation }) => {
-  const { user, setUser } = useContext(EventContext);
+  const { setUser } = useContext(EventContext);
+  const [name, setName] = useState("");
+
+  // Define a function to store user data
+  const storeUser = async (userData) => {
+    try {
+      await AsyncStorage.setItem("user", userData);
+      // console.log("User data stored successfully");
+    } catch (error) {
+      console.error("Error storing user data:", error);
+    }
+  };
+
+  const retrieveData = async () => {
+    try {
+      // Retrieve user data
+      const userValue = await AsyncStorage.getItem("user");
+      if (userValue !== null) {
+        // console.log("User:", userValue);
+        setName(userValue);
+      }
+    } catch (error) {
+      // Error handling
+      console.error("Error retrieving data:", error);
+    }
+  };
+
+  useEffect(() => {
+    retrieveData();
+  }, []);
 
   return (
     <SafeAreaView style={stylesLogin.container}>
@@ -20,10 +51,10 @@ const CreateAcc = ({ navigation }) => {
           <TextInput
             underlineColorAndroid="transparent"
             style={stylesLogin.textInput}
-            value={user}
+            value={name}
             placeholder="Name..."
             placeholderTextColor="#BDBDBD"
-            onChangeText={(newText) => setUser(newText)}
+            onChangeText={(newText) => setName(newText)}
           />
         </View>
         <TouchableHighlight
@@ -31,8 +62,9 @@ const CreateAcc = ({ navigation }) => {
           underlayColor="#DDDDDD"
           style={stylesLogin.button}
           onPress={() => {
-            if (user.length > 0) {
-              return navigation.navigate("Home");
+            if (name.length > 0) {
+              setUser(name);
+              storeUser(name);
             }
           }}
         >
