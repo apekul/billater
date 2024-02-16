@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const stylesLogin = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "space-between",
     marginLeft: 16,
     marginRight: 16,
     marginTop: 25,
@@ -37,6 +38,14 @@ export const stylesLogin = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  clearBtnGrp: {
+    marginBottom: 20,
+    alignItems: "center",
+  },
+  clearBtn: {
+    backgroundColor: "#5DB075",
+    padding: 10,
   },
 });
 
@@ -79,7 +88,8 @@ export const stylesEvent = StyleSheet.create({
   dateBar: {
     backgroundColor: "#EFEFEF",
     borderRadius: 10,
-    padding: 3,
+    paddingVertical: 5,
+    marginBottom: 5,
   },
   icon: {
     width: 40,
@@ -135,5 +145,9 @@ export const stylesActivitie = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  actItem: {
+    width: 100,
+    fontSize: 15,
   },
 });

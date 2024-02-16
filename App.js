@@ -59,16 +59,6 @@ export default function App() {
     }
   };
 
-  // // Define a function to store user data
-  // const storeUser = async (userData) => {
-  //   try {
-  //     await AsyncStorage.setItem("user", userData);
-  //     // console.log("User data stored successfully");
-  //   } catch (error) {
-  //     console.error("Error storing user data:", error);
-  //   }
-  // };
-
   // Define a function to store events data
   const storeEvents = async (eventsData) => {
     try {
@@ -85,12 +75,6 @@ export default function App() {
   useEffect(() => {
     retrieveData();
   }, []); // Empty dependency array ensures useEffect runs only once on mount
-  // useEffect hook to store user data whenever it changes
-
-  // Instead, update storage when cliced Apply
-  // useEffect(() => {
-  //   storeUser(user);
-  // }, [user]); // Run this effect whenever user changes
 
   // useEffect hook to store events data whenever it changes
   useEffect(() => {

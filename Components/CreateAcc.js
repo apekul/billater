@@ -5,13 +5,15 @@ import {
   TextInput,
   TouchableHighlight,
   SafeAreaView,
+  Alert,
+  NativeModules,
 } from "react-native";
 import { stylesLogin } from "../styles/style";
 import { EventContext } from "../context";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CreateAcc = ({ navigation }) => {
+const CreateAcc = () => {
   const { setUser } = useContext(EventContext);
   const [name, setName] = useState("");
 
@@ -36,6 +38,18 @@ const CreateAcc = ({ navigation }) => {
     } catch (error) {
       // Error handling
       console.error("Error retrieving data:", error);
+    }
+  };
+
+  // Clear Storage
+  const clearAsyncStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      NativeModules.DevSettings.reload();
+      Alert.alert("Success", "AsyncStorage cleared successfully");
+    } catch (error) {
+      console.error("Error clearing AsyncStorage:", error);
+      Alert.alert("Error", "Failed to clear AsyncStorage");
     }
   };
 
@@ -69,6 +83,17 @@ const CreateAcc = ({ navigation }) => {
           }}
         >
           <Text style={stylesLogin.btnText}>APPLY</Text>
+        </TouchableHighlight>
+      </View>
+      {/* Clear storage */}
+      <View style={stylesLogin.clearBtnGrp}>
+        <TouchableHighlight
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          style={stylesLogin.clearBtn}
+          onPress={clearAsyncStorage}
+        >
+          <Text>Clear storage</Text>
         </TouchableHighlight>
       </View>
     </SafeAreaView>

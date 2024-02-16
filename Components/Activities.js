@@ -61,11 +61,19 @@ const Activities = ({ currentEvent, navigation }) => {
             <View
               style={[
                 stylesActivitie.group,
-                { backgroundColor: "#F6F6F6", paddingHorizontal: 5 },
+                {
+                  backgroundColor: "#F6F6F6",
+                  padding: 5,
+                },
               ]}
             >
               <Text style={stylesActivitie.txtBold}>{buyer}</Text>
-              <Text style={stylesActivitie.txtBold}>total spent $</Text>
+              <Text style={stylesActivitie.txtBold}>
+                total spend ${events.total}
+                {events.map((event, index) => (
+                  <Text key={index}>{event.total}</Text>
+                ))}
+              </Text>
             </View>
 
             <View
@@ -83,36 +91,32 @@ const Activities = ({ currentEvent, navigation }) => {
                       style={[
                         stylesActivitie.group,
                         {
-                          gap: 10,
                           paddingLeft: 10,
                           paddingRight: 5,
                         },
                       ]}
                     >
-                      <Text>{act.name}</Text>
-                      <Text>{act.receipient}</Text>
-                      <Text>${act.price}</Text>
+                      <Text style={stylesActivitie.actItem}>{act.name}</Text>
+                      <Text
+                        style={[
+                          stylesActivitie.actItem,
+                          { textAlign: "center" },
+                        ]}
+                      >
+                        {act.receipient}
+                      </Text>
+                      <Text
+                        style={[
+                          stylesActivitie.actItem,
+                          { textAlign: "right" },
+                        ]}
+                      >
+                        ${act.price}
+                      </Text>
                     </View>
                   ))}
                 </View>
               ))}
-              {/* {events.items.map((item, index) => (
-                <View
-                  key={index}
-                  style={[
-                    stylesActivitie.group,
-                    {
-                      gap: 10,
-                      paddingLeft: 10,
-                      paddingRight: 5,
-                    },
-                  ]}
-                >
-                  <Text>{item.name}</Text>
-                  <Text>{item.receipient}</Text>
-                  <Text>${item.price}</Text>
-                </View>
-              ))} */}
             </View>
           </View>
         ))}

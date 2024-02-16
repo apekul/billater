@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableHighlight } from "react-native";
 import { stylesActivitie } from "../styles/style";
 import { stylesEvent } from "../styles/style";
 import { EventContext } from "../context";
+
 const CreateActivity = ({ route, navigation }) => {
   const { events, setEvents, user } = useContext(EventContext);
 
@@ -10,22 +11,46 @@ const CreateActivity = ({ route, navigation }) => {
   const [price, setPrice] = useState();
   const [buyer, setBuyer] = useState(user);
   const [forWho, setForWho] = useState("");
-  // {
-  //   buyer: "John Wick",
-  //   items: [
-  //     {
-  //       name: "Kebab",
-  //       price: 20,
-  //       receipient: "Micha Dzik",
-  //     },
-  //     {
-  //       name: "Piwo",
-  //       price: 30,
-  //       receipient: "Jhon Doe",
-  //     },
-  //   ],
-  //   total: 50,
-  // },
+
+  // [
+  //   {
+  //     date: "2024-02-16T16:17:02.671Z",
+  //     id: "8ktlqrua1",
+  //     ppl: 3,
+  //     title: "Kebav",
+  //     value: [
+  //       {
+  //         buyer: "Adam",
+  //         items: [
+  //           {
+  //             name: "test",
+  //             price: 12,
+  //             receipient: "Adas",
+  //           },
+  //           {
+  //             name: "asd",
+  //             price: 20,
+  //             receipient: "Adas",
+  //           },
+  //         ],
+  //         total: "2",
+  //       },
+  //     ],
+  //   },
+  // ];
+
+  const calcTotal = () => {
+    const id = route.params.id;
+    const currentItem = events.find((v) => v.id === id);
+    return currentItem;
+  };
+
+  const buyerExists = (eventId, buyerName) => {
+    const event = events.find((item) => item.id === eventId);
+    if (!event) return false;
+    return event.value.some((val) => val.buyer === buyerName);
+  };
+
   const addNewAct = () => {
     const id = route.params.id;
     const newAct = {
@@ -39,17 +64,47 @@ const CreateActivity = ({ route, navigation }) => {
       ],
       total: price,
     };
-    // Update array inside event (route.params.id) value (array)
-    setEvents((prev) => {
-      return prev.map((item) => {
-        if (item.id === id) {
-          return { ...item, value: [...item.value, newAct] };
-        }
-        return item;
-      });
-    });
+    const newItem = {
+      name: title,
+      price: price,
+      receipient: forWho,
+    };
+    buyerExists(id, buyer)
+      ? // Update array inside event (route.params.id) value (array)
+        setEvents((prev) => {
+          return prev.map((item) => {
+            if (item.id === id) {
+              const updatedValue = item.value.map((val) => {
+                if (val.buyer === buyer) {
+                  const newTotal = +val.total + +price;
+                  return {
+                    ...val,
+                    items: [...val.items, newItem],
+                    total: newTotal,
+                  };
+                }
+                return val;
+              });
+              return {
+                ...item,
+                value: updatedValue,
+              };
+            }
+            return item;
+          });
+        })
+      : setEvents((prev) => {
+          return prev.map((item) => {
+            if (item.id === id) {
+              return {
+                ...item,
+                value: [...item.value, newAct],
+              };
+            }
+            return item;
+          });
+        });
   };
-
   return (
     <View style={stylesEvent.container}>
       {/* Set Title */}

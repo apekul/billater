@@ -19,17 +19,17 @@ const EventList = ({ navigation }) => {
     return acc;
   }, {});
 
-  // {
-  //   buyer: buyer,
-  //   items: [
-  //     {
-  //       name: title,
-  //       price: price,
-  //       receipient: forWho,
-  //     },
-  //   ],
-  //   total: price,
-  // }
+  const calculateTotalSum = () => {
+    const totalSum = events.reduce((acc, event) => {
+      event.value.forEach((val) => {
+        acc += +val.total;
+      });
+      return acc;
+    }, 0);
+
+    return totalSum;
+  };
+
   return (
     <View style={{ flex: 1, gap: 20 }}>
       {/* Add event Button */}
@@ -54,35 +54,38 @@ const EventList = ({ navigation }) => {
                   {date}
                 </Text>
               </View>
+              <View style={{ gap: 5 }}>
+                {events.map((event, j) => (
+                  <TouchableHighlight
+                    key={j}
+                    activeOpacity={0.6}
+                    underlayColor="#DDDDDD"
+                    style={{
+                      padding: 5,
+                    }}
+                    onPress={() => {
+                      return navigation.navigate("Event", { id: event.id });
+                    }}
+                  >
+                    <View style={[stylesEvent.group]}>
+                      <View style={[stylesEvent.group, { gap: 10 }]}>
+                        <View style={stylesEvent.icon}></View>
+                        <View>
+                          <Text style={{ fontWeight: "bold" }}>
+                            {event.title ? event.title : "No title"}
+                          </Text>
+                          <Text>{event.ppl} participant</Text>
+                        </View>
+                      </View>
 
-              {events.map((event, j) => (
-                <TouchableHighlight
-                  key={j}
-                  activeOpacity={0.6}
-                  underlayColor="#DDDDDD"
-                  style={{ marginVertical: 10 }}
-                  onPress={() => {
-                    return navigation.navigate("Event", { id: event.id });
-                  }}
-                >
-                  <View style={[stylesEvent.group]}>
-                    <View style={[stylesEvent.group, { gap: 10 }]}>
-                      <View style={stylesEvent.icon}></View>
                       <View>
-                        <Text style={{ fontWeight: "bold" }}>
-                          {event.title ? event.title : "No title"}
-                        </Text>
-                        <Text>{event.ppl} participant</Text>
+                        <Text>balance</Text>
+                        <Text>${calculateTotalSum()}</Text>
                       </View>
                     </View>
-
-                    <View>
-                      <Text>balance</Text>
-                      <Text>$20</Text>
-                    </View>
-                  </View>
-                </TouchableHighlight>
-              ))}
+                  </TouchableHighlight>
+                ))}
+              </View>
             </View>
           ))
         ) : (

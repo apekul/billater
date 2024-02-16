@@ -14,27 +14,21 @@ import { stylesEvent } from "../styles/style";
 import Activities from "./Activities";
 
 const Event = ({ route, navigation }) => {
-  const { events, setEvents } = useContext(EventContext);
+  const { events } = useContext(EventContext);
   const { id } = route.params;
   const currentEvent = events.find((e) => e.id === id);
-  //   {
-  //     buyer: "John Wick",
-  //     items: [
-  //       {
-  //         name: "Kebab",
-  //         price: 20,
-  //         receipient: "Micha Dzik",
-  //       },
-  //       {
-  //         name: "Piwo",
-  //         price: 30,
-  //         receipient: "Jhon Doe",
-  //       },
-  //     ],
-  //     total: 50,
-  //   },
 
-  // if current Event is updated then update to setEvents
+  const calculateTotalSum = () => {
+    const totalSum = events.reduce((acc, event) => {
+      event.value.forEach((val) => {
+        acc += +val.total;
+      });
+      return acc;
+    }, 0);
+
+    return totalSum;
+  };
+
   return (
     <SafeAreaView style={stylesEvent.container}>
       <View style={{ gap: 10 }}>
@@ -53,7 +47,7 @@ const Event = ({ route, navigation }) => {
               {moment(currentEvent.date).format("MMMM Do YYYY")}
             </Text>
           </View>
-          <Text>Total spent: $30</Text>
+          <Text>Total spend: ${calculateTotalSum()}</Text>
         </View>
         <Activities currentEvent={currentEvent} navigation={navigation} />
         {/* <Text>Summary: </Text> */}
