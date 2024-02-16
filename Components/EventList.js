@@ -6,7 +6,7 @@ import moment from "moment";
 import { EventContext } from "../context";
 
 const EventList = ({ navigation }) => {
-  const { events, setEvents } = useContext(EventContext);
+  const { events } = useContext(EventContext);
 
   const groupedItems = events.reduce((acc, event) => {
     const date = moment(event.date).format("MMMM Do YYYY");
@@ -28,6 +28,23 @@ const EventList = ({ navigation }) => {
     }, 0);
 
     return totalSum;
+  };
+
+  const countUniqueUsers = (object) => {
+    const uniqueUsersSet = new Set();
+
+    // Iterate over each 'value' object
+    object.value.forEach((val) => {
+      // Add buyer and recipient to the set
+      uniqueUsersSet.add(val.buyer);
+      val.items.forEach((v) => {
+        uniqueUsersSet.add(v.receipient);
+      });
+    });
+
+    // Get the size of the Set, which represents the number of unique users
+    const numberOfUniqueUsers = uniqueUsersSet.size;
+    return numberOfUniqueUsers;
   };
 
   return (
@@ -74,7 +91,7 @@ const EventList = ({ navigation }) => {
                           <Text style={{ fontWeight: "bold" }}>
                             {event.title ? event.title : "No title"}
                           </Text>
-                          <Text>{event.ppl} participant</Text>
+                          <Text>{countUniqueUsers(event)} participant</Text>
                         </View>
                       </View>
 
