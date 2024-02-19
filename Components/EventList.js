@@ -19,11 +19,9 @@ const EventList = ({ navigation }) => {
     return acc;
   }, {});
 
-  const calculateTotalSum = () => {
-    const totalSum = events.reduce((acc, event) => {
-      event.value.forEach((val) => {
-        acc += +val.total;
-      });
+  const calculateTotalSum = (currentEvent) => {
+    const totalSum = currentEvent.value.reduce((acc, curr) => {
+      acc += +curr.total;
       return acc;
     }, 0);
 
@@ -96,7 +94,7 @@ const EventList = ({ navigation }) => {
 
                       <View>
                         <Text>balance</Text>
-                        <Text>${calculateTotalSum()}</Text>
+                        <Text>${calculateTotalSum(event)}</Text>
                       </View>
                     </View>
                   </TouchableHighlight>

@@ -10,16 +10,27 @@ const Event = ({ route, navigation }) => {
   const { id } = route.params;
   const currentEvent = events.find((e) => e.id === id);
 
+  // Sum total money spend on every events
+  // const calculateTotalSum = () => {
+  //   const totalSum = events.reduce((acc, event) => {
+  //     event.value.forEach((val) => {
+  //       acc += +val.total;
+  //     });
+  //     return acc;
+  //   }, 0);
+
+  //   return totalSum;
+  // };
   const calculateTotalSum = () => {
-    const totalSum = events.reduce((acc, event) => {
-      event.value.forEach((val) => {
-        acc += +val.total;
-      });
+    const totalSum = currentEvent.value.reduce((acc, curr) => {
+      acc += +curr.total;
       return acc;
     }, 0);
 
     return totalSum;
   };
+
+  // add edit func to event (change title, date)
 
   return (
     <SafeAreaView style={stylesEvent.container}>
