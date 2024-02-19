@@ -1,16 +1,13 @@
-import React from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  StyleSheet,
-} from "react-native";
+import React, { useContext } from "react";
+import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
 import IconMat from "react-native-vector-icons/MaterialIcons";
 import { stylesActivitie } from "../styles/style";
 import { stylesEvent } from "../styles/style";
+import { EventContext } from "../context";
 
 const Activities = ({ currentEvent, navigation }) => {
+  const { setEvents } = useContext(EventContext);
+
   // pass currentEvent.value, array of payments
   // const fakeAct = [
   //   {
@@ -20,16 +17,39 @@ const Activities = ({ currentEvent, navigation }) => {
   //         name: "Kebab",
   //         price: 20,
   //         receipient: "Micha Dzik",
-  //       },
-  //       {
-  //         name: "Piwo",
-  //         price: 30,
-  //         receipient: "Jhon Doe",
+  //         settle: false,
   //       },
   //     ],
   //     total: 50,
   //   },
   // ];
+
+  // Update settle onClick boolean
+  const updateSettle = (itemId) => {
+    const eventId = currentEvent.id;
+    setEvents((prevData) => {
+      // Find the event with the matching event ID
+      const updatedData = prevData.map((event) => {
+        if (event.id === eventId) {
+          // Find the item within the value array with the matching item ID
+          const updatedValue = event.value.map((value) => ({
+            ...value,
+            items: value.items.map((item) => {
+              if (item.id === itemId) {
+                // Toggle the settle property of the item
+                return { ...item, settle: !item.settle };
+              }
+              return item;
+            }),
+          }));
+          return { ...event, value: updatedValue };
+        }
+        return event;
+      });
+      return updatedData;
+    });
+  };
+
   const groupedAct = currentEvent.value.reduce((acc, curr) => {
     const buyer = curr.buyer;
     if (!acc[buyer]) {
@@ -86,17 +106,23 @@ const Activities = ({ currentEvent, navigation }) => {
               {events.map((event, index) => (
                 <View key={index}>
                   {Object.values(event.items).map((act, j) => (
-                    <View
+                    <TouchableOpacity
                       key={j}
+                      onPress={() => updateSettle(act.id)}
                       style={[
                         stylesActivitie.group,
                         {
-                          paddingLeft: 10,
-                          paddingRight: 5,
+                          paddingVertical: 12,
+                          paddingHorizontal: 10,
+                        },
+                        act.settle && {
+                          opacity: 0.3,
                         },
                       ]}
                     >
-                      <Text style={stylesActivitie.actItem}>{act.name}</Text>
+                      <Text style={stylesActivitie.actItem}>
+                        {act.name},{act.settle ? "true" : "false"}
+                      </Text>
                       <Text
                         style={[
                           stylesActivitie.actItem,
@@ -113,7 +139,7 @@ const Activities = ({ currentEvent, navigation }) => {
                       >
                         ${act.price}
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   ))}
                 </View>
               ))}

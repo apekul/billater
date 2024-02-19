@@ -5,14 +5,16 @@ import moment from "moment";
 import { EventContext } from "../context";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { v4 as uuidv4 } from "uuid";
+import { getRandomBase64 } from "react-native-get-random-values";
 
 const CreateEvent = ({ navigation }) => {
-  const { events, setEvents, user } = useContext(EventContext);
+  const { setEvents, user } = useContext(EventContext);
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [whoPays, setWhoPays] = useState(user);
-  const newID = Math.random().toString(36).substr(2, 9);
+  const newID = uuidv4();
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;

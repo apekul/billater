@@ -1,13 +1,5 @@
-import React, { useContext, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-  TextInput,
-  TouchableHighlight,
-  SafeAreaView,
-} from "react-native";
+import React, { useContext } from "react";
+import { Text, View, SafeAreaView } from "react-native";
 import moment from "moment";
 import { EventContext } from "../context";
 import { stylesEvent } from "../styles/style";

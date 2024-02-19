@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableHighlight } from "react-native";
 import { stylesActivitie } from "../styles/style";
 import { stylesEvent } from "../styles/style";
 import { EventContext } from "../context";
+import { v4 as uuidv4 } from "uuid";
+import { getRandomBase64 } from "react-native-get-random-values";
 
 const CreateActivity = ({ route, navigation }) => {
   const { events, setEvents, user } = useContext(EventContext);
@@ -17,10 +19,6 @@ const CreateActivity = ({ route, navigation }) => {
   const [priceValid, setPriceValid] = useState(true);
   const [buyerValid, setBuyerValid] = useState(true);
   const [forWhoValid, setForWhoValid] = useState(true);
-
-  const handleTitleChange = (text) => {
-    setTitle(text);
-  };
 
   const handleSubmit = () => {
     // Validate individual input fields and set validity state accordingly
@@ -75,21 +73,28 @@ const CreateActivity = ({ route, navigation }) => {
 
   const addNewAct = () => {
     const id = route.params.id;
+    const newActID = uuidv4();
+    const newSubID = uuidv4();
     const newAct = {
+      id: newActID,
       buyer: buyer,
       items: [
         {
+          id: newSubID,
           name: title,
           price: price,
           receipient: forWho,
+          settle: false,
         },
       ],
       total: price,
     };
     const newItem = {
+      id: newSubID,
       name: title,
       price: price,
       receipient: forWho,
+      settle: false,
     };
     buyerExists(id, buyer)
       ? // Update array inside event (route.params.id) value (array)
@@ -139,7 +144,7 @@ const CreateActivity = ({ route, navigation }) => {
           value={title}
           placeholder="Title..."
           placeholderTextColor="#BDBDBD"
-          onChangeText={(newText) => handleTitleChange(newText)}
+          onChangeText={(newText) => setTitle(newText)}
         />
       </View>
 

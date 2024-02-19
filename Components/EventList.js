@@ -32,7 +32,6 @@ const EventList = ({ navigation }) => {
 
   const countUniqueUsers = (object) => {
     const uniqueUsersSet = new Set();
-
     // Iterate over each 'value' object
     object.value.forEach((val) => {
       // Add buyer and recipient to the set
