@@ -28,6 +28,15 @@ const EventList = ({ navigation }) => {
     return totalSum;
   };
 
+  // Check if payments are settle
+  const checkSettle = (currentEvent) => {
+    const check = currentEvent.value
+      .map((v) => v.items.map((items) => items.settle))
+      .flat()
+      .every(Boolean);
+    return check;
+  };
+
   const countUniqueUsers = (object) => {
     const uniqueUsersSet = new Set();
     // Iterate over each 'value' object
@@ -93,8 +102,14 @@ const EventList = ({ navigation }) => {
                       </View>
 
                       <View>
-                        <Text>balance</Text>
-                        <Text>${calculateTotalSum(event)}</Text>
+                        {checkSettle(event) ? (
+                          <Text>setteled up</Text>
+                        ) : (
+                          <Text>Balance</Text>
+                        )}
+                        <Text style={{ textAlign: "right" }}>
+                          ${calculateTotalSum(event)}
+                        </Text>
                       </View>
                     </View>
                   </TouchableHighlight>
