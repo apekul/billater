@@ -8,9 +8,37 @@ const CreateActivity = ({ route, navigation }) => {
   const { events, setEvents, user } = useContext(EventContext);
 
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("");
   const [buyer, setBuyer] = useState(user);
   const [forWho, setForWho] = useState("");
+
+  // isValid
+  const [titleValid, setTitleValid] = useState(true);
+  const [priceValid, setPriceValid] = useState(true);
+  const [buyerValid, setBuyerValid] = useState(true);
+  const [forWhoValid, setForWhoValid] = useState(true);
+
+  const handleTitleChange = (text) => {
+    setTitle(text);
+  };
+
+  const handleSubmit = () => {
+    // Validate individual input fields and set validity state accordingly
+    const isTitleValid = title.trim() !== "";
+    const isPriceValid = price.trim() !== "" && !isNaN(price);
+    const isBuyerValid = buyer.trim() !== "";
+    const isForWhoValid = forWho.trim() !== "";
+    setTitleValid(isTitleValid);
+    setPriceValid(isPriceValid);
+    setBuyerValid(isBuyerValid);
+    setForWhoValid(isForWhoValid);
+
+    // Submit logic here...
+    if (isTitleValid && isPriceValid && isBuyerValid && isForWhoValid) {
+      addNewAct();
+      navigation.navigate("Event", { id: route.params.id });
+    }
+  };
 
   // [
   //   {
@@ -38,12 +66,6 @@ const CreateActivity = ({ route, navigation }) => {
   //     ],
   //   },
   // ];
-
-  const calcTotal = () => {
-    const id = route.params.id;
-    const currentItem = events.find((v) => v.id === id);
-    return currentItem;
-  };
 
   const buyerExists = (eventId, buyerName) => {
     const event = events.find((item) => item.id === eventId);
@@ -105,6 +127,7 @@ const CreateActivity = ({ route, navigation }) => {
           });
         });
   };
+
   return (
     <View style={stylesEvent.container}>
       {/* Set Title */}
@@ -112,11 +135,11 @@ const CreateActivity = ({ route, navigation }) => {
         <Text>Title</Text>
         <TextInput
           underlineColorAndroid="transparent"
-          style={stylesEvent.textInput}
+          style={[stylesEvent.textInput, !titleValid && { borderColor: "red" }]}
           value={title}
           placeholder="Title..."
           placeholderTextColor="#BDBDBD"
-          onChangeText={(newText) => setTitle(newText)}
+          onChangeText={(newText) => handleTitleChange(newText)}
         />
       </View>
 
@@ -125,7 +148,7 @@ const CreateActivity = ({ route, navigation }) => {
         <Text>Price</Text>
         <TextInput
           underlineColorAndroid="transparent"
-          style={stylesEvent.textInput}
+          style={[stylesEvent.textInput, !priceValid && { borderColor: "red" }]}
           value={price}
           placeholder="Price..."
           keyboardType="numeric"
@@ -147,7 +170,10 @@ const CreateActivity = ({ route, navigation }) => {
           <Text>Buyer</Text>
           <TextInput
             underlineColorAndroid="transparent"
-            style={stylesEvent.textInput}
+            style={[
+              stylesEvent.textInput,
+              !buyerValid && { borderColor: "red" },
+            ]}
             value={buyer}
             placeholder="Buyer..."
             placeholderTextColor="#BDBDBD"
@@ -158,7 +184,10 @@ const CreateActivity = ({ route, navigation }) => {
           <Text>For</Text>
           <TextInput
             underlineColorAndroid="transparent"
-            style={stylesEvent.textInput}
+            style={[
+              stylesEvent.textInput,
+              !forWhoValid && { borderColor: "red" },
+            ]}
             value={forWho}
             placeholder="For..."
             placeholderTextColor="#BDBDBD"
@@ -171,10 +200,7 @@ const CreateActivity = ({ route, navigation }) => {
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
         style={[stylesActivitie.button, { marginTop: 20 }]}
-        onPress={() => {
-          addNewAct();
-          return navigation.navigate("Event", { id: route.params.id });
-        }}
+        onPress={handleSubmit}
       >
         <Text style={stylesActivitie.btnText}>CREATE</Text>
       </TouchableHighlight>
