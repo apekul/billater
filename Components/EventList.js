@@ -103,7 +103,7 @@ const EventList = ({ navigation }) => {
 
                       <View>
                         {checkSettle(event) ? (
-                          <Text>setteled up</Text>
+                          <Text style={{ color: "#24CE85" }}>setteled up</Text>
                         ) : (
                           <Text>Balance</Text>
                         )}

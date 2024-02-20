@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import EventList from "./EventList";
 import { stylesHome } from "../styles/style";
+import { EventContext } from "../context";
 
 const Home = ({ navigation }) => {
+  const { events, setEvents } = useContext(EventContext);
+
   const [balance, setBalance] = useState([
-    { txt: "you owe", value: 20, color: "#EF4F2B" },
-    { txt: "you are owed", value: 10, color: "#24CE85" },
+    { txt: "you owe", value: 0, color: "#EF4F2B" },
+    { txt: "you are owed", value: 0, color: "#24CE85" },
     { txt: "balance", value: 0, color: "#898A8D" },
   ]);
+
+  // function that update balance by current user payments
 
   return (
     <SafeAreaView style={stylesHome.container}>

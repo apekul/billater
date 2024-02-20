@@ -99,7 +99,6 @@ const Activities = ({ currentEvent, navigation }) => {
             <View
               style={{
                 gap: 5,
-                paddingVertical: 5,
                 backgroundColor: "#E8E8E8",
               }}
             >
@@ -116,13 +115,28 @@ const Activities = ({ currentEvent, navigation }) => {
                           paddingHorizontal: 10,
                         },
                         act.settle && {
-                          opacity: 0.3,
+                          opacity: 0.6,
+                          backgroundColor: "lightgray",
                         },
                       ]}
                     >
-                      <Text style={stylesActivitie.actItem}>
-                        {act.name},{act.settle ? "true" : "false"}
-                      </Text>
+                      <View
+                        style={[
+                          stylesActivitie.actItem,
+                          { flexDirection: "row", gap: 10 },
+                        ]}
+                      >
+                        {act.settle ? (
+                          <IconMat name="check-box" size={24} color="green" />
+                        ) : (
+                          <IconMat
+                            name="check-box-outline-blank"
+                            size={24}
+                            color="black"
+                          />
+                        )}
+                        <Text style={{ fontSize: 15 }}>{act.name}</Text>
+                      </View>
                       <Text
                         style={[
                           stylesActivitie.actItem,
