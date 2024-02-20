@@ -129,6 +129,7 @@ export const stylesActivitie = StyleSheet.create({
     justifyContent: "space-between",
   },
   container: {
+    flex: 1,
     gap: 10,
   },
   header: {
@@ -149,5 +150,23 @@ export const stylesActivitie = StyleSheet.create({
   actItem: {
     width: 100,
     fontSize: 15,
+  },
+});
+
+export const stylesSummary = StyleSheet.create({
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  container: {
+    backgroundColor: "lightgray",
+  },
+  group: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 5,
+  },
+  total: {
+    fontSize: 18,
   },
 });

@@ -1,9 +1,16 @@
 import React, { useContext } from "react";
-import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableHighlight,
+  ScrollView,
+} from "react-native";
 import IconMat from "react-native-vector-icons/MaterialIcons";
 import { stylesActivitie } from "../styles/style";
 import { stylesEvent } from "../styles/style";
 import { EventContext } from "../context";
+import EventSummary from "./EventSummary";
 
 const Activities = ({ currentEvent, navigation }) => {
   const { setEvents } = useContext(EventContext);
@@ -75,9 +82,9 @@ const Activities = ({ currentEvent, navigation }) => {
       </TouchableHighlight>
 
       {/* List */}
-      <View style={{ gap: 10 }}>
+      <ScrollView>
         {Object.entries(groupedAct).map(([buyer, events], i) => (
-          <View key={i}>
+          <View key={i} style={{ marginVertical: 5 }}>
             <View
               style={[
                 stylesActivitie.group,
@@ -160,7 +167,8 @@ const Activities = ({ currentEvent, navigation }) => {
             </View>
           </View>
         ))}
-      </View>
+        <EventSummary currentEvent={currentEvent} />
+      </ScrollView>
     </View>
   );
 };

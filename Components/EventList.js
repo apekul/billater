@@ -115,7 +115,8 @@ const EventList = ({ navigation }) => {
         underlayColor="#DDDDDD"
         style={[stylesEvent.btn]}
         onPress={() => {
-          // return addNewEvent();
+          setSelectedItems([]);
+          setToggleDelete(false);
           return navigation.navigate("CreateEvent");
         }}
       >

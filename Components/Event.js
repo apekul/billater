@@ -34,7 +34,7 @@ const Event = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={stylesEvent.container}>
-      <View style={{ gap: 10 }}>
+      <View style={{ gap: 10, flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
