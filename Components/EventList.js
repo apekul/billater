@@ -1,12 +1,20 @@
-import React, { useContext } from "react";
-import { View, Text, ScrollView, TouchableHighlight } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableHighlight,
+  Alert,
+} from "react-native";
 import IconMat from "react-native-vector-icons/MaterialIcons";
 import { stylesEvent } from "../styles/style";
 import moment from "moment";
 import { EventContext } from "../context";
 
 const EventList = ({ navigation }) => {
-  const { events } = useContext(EventContext);
+  const { events, setEvents } = useContext(EventContext);
+  const [toggleDelete, setToggleDelete] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const groupedItems = events.reduce((acc, event) => {
     const date = moment(event.date).format("MMMM Do YYYY");
@@ -37,6 +45,7 @@ const EventList = ({ navigation }) => {
     return check;
   };
 
+  // Return number of ppl taking part in event
   const countUniqueUsers = (object) => {
     const uniqueUsersSet = new Set();
     // Iterate over each 'value' object
@@ -53,6 +62,51 @@ const EventList = ({ navigation }) => {
     return numberOfUniqueUsers;
   };
 
+  const updateSelectedItems = (id) => {
+    if (selectedItems.includes(id)) {
+      const remove = selectedItems.filter((v) => v !== id);
+      return setSelectedItems(remove);
+    }
+    return setSelectedItems((prev) => [...prev, id]);
+  };
+
+  const deleteSelected = () => {
+    const updatedEvents = events.filter(
+      (event) => !selectedItems.includes(event.id)
+    );
+    selectedItems.length <= 0
+      ? Alert.alert(
+          "No items was selected to delete",
+          "Please select item to delete",
+          [
+            {
+              text: "Ok",
+              style: "cancel",
+            },
+          ],
+          { cancelable: true }
+        )
+      : Alert.alert(
+          "Delete Items",
+          "Are you sure you want to delete selected items?",
+          [
+            {
+              text: "Cancel",
+              style: "cancel",
+            },
+            {
+              text: "Delete",
+              onPress: () => {
+                setToggleDelete(false);
+                setSelectedItems([]);
+                setEvents(updatedEvents);
+              },
+              style: "destructive",
+            },
+          ],
+          { cancelable: true }
+        );
+  };
   return (
     <View style={{ flex: 1, gap: 20 }}>
       {/* Add event Button */}
@@ -67,6 +121,37 @@ const EventList = ({ navigation }) => {
       >
         <IconMat name="add-box" size={40} color="#898A8D" />
       </TouchableHighlight>
+
+      {/* Confirm/Cancel Delete */}
+      {toggleDelete && (
+        <View style={stylesEvent.group}>
+          <TouchableHighlight
+            activeOpacity={0.6}
+            underlayColor="#DDDDDD"
+            onPress={() => {
+              setSelectedItems([]);
+              return setToggleDelete(false);
+            }}
+            style={{ backgroundColor: "gray", padding: 5 }}
+          >
+            <Text style={{ color: "white" }}>Cancel</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            disabled={selectedItems.length <= 0}
+            activeOpacity={0.6}
+            underlayColor="#DDDDDD"
+            onPress={() => deleteSelected()}
+            style={[
+              selectedItems.length <= 0
+                ? { backgroundColor: "lightgray" }
+                : { backgroundColor: "#EF4F2B" },
+              { padding: 5 },
+            ]}
+          >
+            <Text style={{ color: "white" }}>Delete Selected</Text>
+          </TouchableHighlight>
+        </View>
+      )}
       {/* Event */}
       <ScrollView>
         {events.length > 0 ? (
@@ -86,13 +171,38 @@ const EventList = ({ navigation }) => {
                     style={{
                       padding: 5,
                     }}
-                    onPress={() => {
-                      return navigation.navigate("Event", { id: event.id });
-                    }}
+                    onLongPress={() => setToggleDelete(true)}
+                    onPress={() =>
+                      toggleDelete
+                        ? updateSelectedItems(event.id)
+                        : navigation.navigate("Event", { id: event.id })
+                    }
                   >
                     <View style={[stylesEvent.group]}>
                       <View style={[stylesEvent.group, { gap: 10 }]}>
-                        <View style={stylesEvent.icon}></View>
+                        {/* Display icon/check box to delete */}
+                        <View style={{ position: "relative" }}>
+                          {toggleDelete ? (
+                            <>
+                              {selectedItems.includes(event.id) ? (
+                                <IconMat
+                                  name="check-box"
+                                  size={40}
+                                  color="black"
+                                />
+                              ) : (
+                                <IconMat
+                                  name="check-box-outline-blank"
+                                  size={40}
+                                  color="black"
+                                />
+                              )}
+                            </>
+                          ) : (
+                            <View style={stylesEvent.icon}></View>
+                          )}
+                        </View>
+
                         <View>
                           <Text style={{ fontWeight: "bold" }}>
                             {event.title ? event.title : "No title"}
