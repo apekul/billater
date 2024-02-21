@@ -68,12 +68,14 @@ const Activities = ({ currentEvent, navigation }) => {
 
   return (
     <View style={stylesActivitie.container}>
-      <Text style={stylesActivitie.txtBold}>Activities:</Text>
+      <Text style={[stylesActivitie.txtBold, { paddingHorizontal: 16 }]}>
+        Activities:
+      </Text>
       {/* Add event Button */}
       <TouchableHighlight
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
-        style={[stylesEvent.btn]}
+        style={[stylesEvent.btn, { marginHorizontal: 16 }]}
         onPress={() => {
           return navigation.navigate("CreateActivity", { id: currentEvent.id });
         }}
@@ -82,9 +84,9 @@ const Activities = ({ currentEvent, navigation }) => {
       </TouchableHighlight>
 
       {/* List */}
-      <ScrollView>
+      <ScrollView style={{ paddingHorizontal: 16 }}>
         {Object.entries(groupedAct).map(([buyer, events], i) => (
-          <View key={i} style={{ marginVertical: 5 }}>
+          <View key={i} style={{ marginBottom: 10 }}>
             <View
               style={[
                 stylesActivitie.group,

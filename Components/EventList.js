@@ -108,12 +108,12 @@ const EventList = ({ navigation }) => {
         );
   };
   return (
-    <View style={{ flex: 1, gap: 20 }}>
+    <View style={{ flex: 1, gap: 10 }}>
       {/* Add event Button */}
       <TouchableHighlight
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
-        style={[stylesEvent.btn]}
+        style={[stylesEvent.btn, { marginHorizontal: 16 }]}
         onPress={() => {
           setSelectedItems([]);
           setToggleDelete(false);
@@ -154,24 +154,26 @@ const EventList = ({ navigation }) => {
         </View>
       )}
       {/* Event */}
-      <ScrollView>
+      <ScrollView style={{ paddingHorizontal: 16 }}>
         {events.length > 0 ? (
           Object.entries(groupedItems).map(([date, events], i) => (
-            <View key={i} style={{ marginBottom: 10 }}>
+            <View key={i} style={{ marginVertical: 10 }}>
               <View style={stylesEvent.dateBar}>
                 <Text style={{ paddingHorizontal: 10, fontWeight: "bold" }}>
                   {date}
                 </Text>
               </View>
-              <View style={{ gap: 5 }}>
+              <View>
                 {events.map((event, j) => (
                   <TouchableHighlight
                     key={j}
                     activeOpacity={0.6}
                     underlayColor="#DDDDDD"
-                    style={{
-                      padding: 5,
-                    }}
+                    style={[
+                      j % 2 && {
+                        backgroundColor: "#EFEFEF",
+                      },
+                    ]}
                     onLongPress={() => setToggleDelete(true)}
                     onPress={() =>
                       toggleDelete
@@ -179,7 +181,7 @@ const EventList = ({ navigation }) => {
                         : navigation.navigate("Event", { id: event.id })
                     }
                   >
-                    <View style={[stylesEvent.group]}>
+                    <View style={[stylesEvent.group, { padding: 5 }]}>
                       <View style={[stylesEvent.group, { gap: 10 }]}>
                         {/* Display icon/check box to delete */}
                         <View style={{ position: "relative" }}>

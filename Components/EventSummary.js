@@ -12,7 +12,7 @@ const EventSummary = ({ currentEvent }) => {
     return totalSum;
   };
   return (
-    <View style={{ marginVertical: 10, marginBottom: 50 }}>
+    <View style={{ marginVertical: 10 }}>
       <Text style={stylesSummary.header}>Summary</Text>
       <View style={stylesSummary.container}>
         <View style={stylesSummary.group}>
@@ -23,6 +23,9 @@ const EventSummary = ({ currentEvent }) => {
           <Text>Person</Text>
           <Text>$20</Text>
         </View>
+      </View>
+      <View style={{ marginVertical: 10 }}>
+        <Text>Export to file</Text>
       </View>
     </View>
   );

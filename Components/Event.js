@@ -33,7 +33,7 @@ const Event = ({ route, navigation }) => {
   // add edit func to event (change title, date)
 
   return (
-    <SafeAreaView style={stylesEvent.container}>
+    <SafeAreaView style={[stylesEvent.container]}>
       <View style={{ gap: 10, flex: 1 }}>
         <View
           style={{
@@ -42,7 +42,11 @@ const Event = ({ route, navigation }) => {
             alignItems: "flex-end",
           }}
         >
-          <View>
+          <View
+            style={{
+              paddingHorizontal: 16,
+            }}
+          >
             <Text style={{ fontWeight: "bold", fontSize: 20 }}>
               {currentEvent.title ? currentEvent.title : "No title"}
             </Text>

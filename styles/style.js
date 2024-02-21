@@ -56,13 +56,13 @@ export const stylesHome = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginLeft: 16,
-    marginRight: 16,
+    // marginHorizontal: 16,
     gap: 20,
   },
   list: {
     backgroundColor: "#EFEFEF",
     borderRadius: 5,
+    marginHorizontal: 16,
     padding: 10,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -72,8 +72,8 @@ export const stylesHome = StyleSheet.create({
 export const stylesEvent = StyleSheet.create({
   container: {
     flex: 1,
-    marginLeft: 16,
-    marginRight: 16,
+    // marginHorizontal: 16,
+
     gap: 10,
   },
   textInput: {

@@ -134,7 +134,7 @@ const CreateActivity = ({ route, navigation }) => {
   };
 
   return (
-    <View style={stylesEvent.container}>
+    <View style={[stylesEvent.container, { paddingHorizontal: 16 }]}>
       {/* Set Title */}
       <View>
         <Text>Title</Text>
