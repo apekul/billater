@@ -19,7 +19,7 @@ const EventSummary = ({ currentEvent }) => {
     transaction.value.forEach((order) => {
       const buyer = order.buyer;
 
-      // Add buyer to summary if not present
+      // Initialize buyer's spend if not present
       if (!summary[buyer]) {
         summary[buyer] = { spend: 0, owes: 0 };
       }
@@ -33,12 +33,14 @@ const EventSummary = ({ currentEvent }) => {
           summary[receipient] = { spend: 0, owes: 0 };
         }
 
-        // Update spend for buyer and owes for receipient if item is not settled
+        // Update owes for receipient
         if (!settle) {
-          summary[buyer].spend += +price;
           summary[receipient].owes += +price;
         }
       });
+
+      // Update buyer's spend for the order
+      summary[buyer].spend += order.total;
     });
 
     return summary;
@@ -64,16 +66,16 @@ const EventSummary = ({ currentEvent }) => {
               ]}
             >
               <Text style={{ width: 100 }}>{person}</Text>
+              <Text style={{ width: 100, textAlign: "left" }}>
+                Spend: {info.spend}$
+              </Text>
               <Text
                 style={{
                   width: 100,
-                  textAlign: "left",
+                  textAlign: "right",
                 }}
               >
                 Owes: {info.owes > 0 ? "-" + info.owes : info.owes}$
-              </Text>
-              <Text style={{ width: 100, textAlign: "right" }}>
-                Spend: {info.spend}$
               </Text>
             </View>
           )
