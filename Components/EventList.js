@@ -107,6 +107,7 @@ const EventList = ({ navigation }) => {
           { cancelable: true }
         );
   };
+
   return (
     <View style={{ flex: 1, gap: 10 }}>
       {/* Add event Button */}
@@ -125,7 +126,7 @@ const EventList = ({ navigation }) => {
 
       {/* Confirm/Cancel Delete */}
       {toggleDelete && (
-        <View style={stylesEvent.group}>
+        <View style={[stylesEvent.group, { paddingHorizontal: 16 }]}>
           <TouchableHighlight
             activeOpacity={0.6}
             underlayColor="#DDDDDD"
@@ -183,7 +184,6 @@ const EventList = ({ navigation }) => {
                   >
                     <View style={[stylesEvent.group, { padding: 5 }]}>
                       <View style={[stylesEvent.group, { gap: 10 }]}>
-                        {/* Display icon/check box to delete */}
                         <View style={{ position: "relative" }}>
                           {toggleDelete ? (
                             <>

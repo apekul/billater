@@ -54,7 +54,9 @@ const Event = ({ route, navigation }) => {
               {moment(currentEvent.date).format("MMMM Do YYYY")}
             </Text>
           </View>
-          <Text>Total spend: ${calculateTotalSum()}</Text>
+          <Text style={{ paddingHorizontal: 16 }}>
+            Total spend: ${calculateTotalSum()}
+          </Text>
         </View>
         <Activities currentEvent={currentEvent} navigation={navigation} />
         {/* <Text>Summary: </Text> */}

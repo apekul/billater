@@ -73,7 +73,6 @@ export const stylesEvent = StyleSheet.create({
   container: {
     flex: 1,
     // marginHorizontal: 16,
-
     gap: 10,
   },
   textInput: {
@@ -164,7 +163,7 @@ export const stylesSummary = StyleSheet.create({
   group: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 5,
+    padding: 5,
   },
   total: {
     fontSize: 18,
