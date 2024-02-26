@@ -59,7 +59,6 @@ const Event = ({ route, navigation }) => {
           </Text>
         </View>
         <Activities currentEvent={currentEvent} navigation={navigation} />
-        {/* <Text>Summary: </Text> */}
       </View>
     </SafeAreaView>
   );

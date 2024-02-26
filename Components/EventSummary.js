@@ -40,7 +40,7 @@ const EventSummary = ({ currentEvent }) => {
       });
 
       // Update buyer's spend for the order
-      summary[buyer].spend += order.total;
+      summary[buyer].spend += +order.total;
     });
 
     return summary;
@@ -80,7 +80,6 @@ const EventSummary = ({ currentEvent }) => {
             </View>
           )
         )}
-        {console.log(calculateSummary(currentEvent))}
       </View>
       <View style={{ marginVertical: 10 }}>
         <Text>Export to file</Text>
