@@ -34,7 +34,11 @@ const Home = ({ navigation }) => {
     events.forEach((event) => {
       event.value.forEach((value) => {
         if (value.buyer === user) {
-          total += +value.total;
+          value.items.forEach((item) => {
+            if (!item.settle) {
+              total += +item.price;
+            }
+          });
         }
       });
     });
