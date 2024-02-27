@@ -34,6 +34,16 @@ export default function App() {
   const [user, setUser] = useState("");
   const [events, setEvents] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [currency, setCurrency] = useState("PLN");
+
+  // Store Currency
+  // const storeUser = async (userData) => {
+  //   try {
+  //     await AsyncStorage.setItem("currency", currency);
+  //   } catch (error) {
+  //     console.error("Error storing user data:", error);
+  //   }
+  // };
 
   // Define a function to retrieve user and events data from AsyncStorage
   const retrieveData = async () => {
@@ -83,7 +93,9 @@ export default function App() {
   // useEffect hook to retrieve data on component mount
 
   return (
-    <EventContext.Provider value={{ events, setEvents, user, setUser }}>
+    <EventContext.Provider
+      value={{ events, setEvents, user, setUser, currency }}
+    >
       <NavigationContainer theme={MyTheme}>
         <Stack.Navigator>
           {isLoading ? (

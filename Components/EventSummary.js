@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text } from "react-native";
 import { stylesSummary } from "../styles/style";
+import { EventContext } from "../context";
 
 const EventSummary = ({ currentEvent }) => {
+  const { currency } = useContext(EventContext);
+
   const calculateTotalSum = () => {
     const totalSum = currentEvent.value.reduce((acc, curr) => {
       acc += +curr.total;
@@ -51,7 +54,10 @@ const EventSummary = ({ currentEvent }) => {
       <View style={stylesSummary.container}>
         <View style={stylesSummary.group}>
           <Text style={stylesSummary.total}>Total money spend:</Text>
-          <Text style={stylesSummary.total}>{calculateTotalSum()}$</Text>
+          <Text style={stylesSummary.total}>
+            {calculateTotalSum()}
+            <Text style={{ fontSize: 12 }}> {currency}</Text>
+          </Text>
         </View>
 
         {Object.entries(calculateSummary(currentEvent)).map(
@@ -67,7 +73,8 @@ const EventSummary = ({ currentEvent }) => {
             >
               <Text style={{ width: 100 }}>{person}</Text>
               <Text style={{ width: 100, textAlign: "left" }}>
-                Spend: {info.spend}$
+                Spend: {info.spend}
+                <Text style={{ fontSize: 12 }}> {currency}</Text>
               </Text>
               <Text
                 style={{
@@ -75,7 +82,8 @@ const EventSummary = ({ currentEvent }) => {
                   textAlign: "right",
                 }}
               >
-                Owes: {info.owes > 0 ? "-" + info.owes : info.owes}$
+                Owes: {info.owes > 0 ? "-" + info.owes : info.owes}
+                <Text style={{ fontSize: 12 }}> {currency}</Text>
               </Text>
             </View>
           )

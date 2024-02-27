@@ -6,7 +6,7 @@ import { stylesEvent } from "../styles/style";
 import Activities from "./Activities";
 
 const Event = ({ route, navigation }) => {
-  const { events } = useContext(EventContext);
+  const { events, currency } = useContext(EventContext);
   const { id } = route.params;
   const currentEvent = events.find((e) => e.id === id);
 
@@ -55,7 +55,8 @@ const Event = ({ route, navigation }) => {
             </Text>
           </View>
           <Text style={{ paddingHorizontal: 16 }}>
-            Total spend: ${calculateTotalSum()}
+            Total spend: {calculateTotalSum()}
+            <Text style={{ fontSize: 12 }}> {currency}</Text>
           </Text>
         </View>
         <Activities currentEvent={currentEvent} navigation={navigation} />

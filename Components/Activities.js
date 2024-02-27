@@ -13,7 +13,7 @@ import { EventContext } from "../context";
 import EventSummary from "./EventSummary";
 
 const Activities = ({ currentEvent, navigation }) => {
-  const { setEvents } = useContext(EventContext);
+  const { setEvents, currency } = useContext(EventContext);
 
   // pass currentEvent.value, array of payments
   // const fakeAct = [
@@ -98,9 +98,12 @@ const Activities = ({ currentEvent, navigation }) => {
             >
               <Text style={stylesActivitie.txtBold}>{buyer}</Text>
               <Text style={stylesActivitie.txtBold}>
-                total spend ${events.total}
+                total spend {events.total}
                 {events.map((event, index) => (
-                  <Text key={index}>{event.total}</Text>
+                  <Text key={index}>
+                    {event.total}
+                    <Text style={{ fontSize: 12 }}> {currency}</Text>
+                  </Text>
                 ))}
               </Text>
             </View>
@@ -160,7 +163,8 @@ const Activities = ({ currentEvent, navigation }) => {
                           { textAlign: "right" },
                         ]}
                       >
-                        ${act.price}
+                        {act.price}
+                        <Text style={{ fontSize: 12 }}> {currency}</Text>
                       </Text>
                     </TouchableOpacity>
                   ))}

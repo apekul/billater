@@ -12,7 +12,7 @@ import moment from "moment";
 import { EventContext } from "../context";
 
 const EventList = ({ navigation }) => {
-  const { events, setEvents } = useContext(EventContext);
+  const { events, setEvents, currency } = useContext(EventContext);
   const [toggleDelete, setToggleDelete] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -221,7 +221,8 @@ const EventList = ({ navigation }) => {
                           <Text>Balance</Text>
                         )}
                         <Text style={{ textAlign: "right" }}>
-                          ${calculateTotalSum(event)}
+                          {calculateTotalSum(event)}
+                          <Text style={{ fontSize: 12 }}> {currency}</Text>
                         </Text>
                       </View>
                     </View>

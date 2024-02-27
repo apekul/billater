@@ -5,7 +5,7 @@ import { stylesHome } from "../styles/style";
 import { EventContext } from "../context";
 
 const Home = ({ navigation }) => {
-  const { events, setEvents, user } = useContext(EventContext);
+  const { events, setEvents, user, currency } = useContext(EventContext);
 
   const [balance, setBalance] = useState({
     owe: { txt: "you owe", value: 0, color: "#EF4F2B" },
@@ -65,7 +65,9 @@ const Home = ({ navigation }) => {
         {Object.values(balance).map((v, i) => (
           <View key={i}>
             <Text style={[stylesHome.txt, { color: v.color }]}>{v.txt}:</Text>
-            <Text style={[stylesHome.txt, { color: v.color }]}>{v.value}$</Text>
+            <Text style={[stylesHome.txt, { color: v.color }]}>
+              {v.value} <Text style={{ fontSize: 12 }}>{currency}</Text>
+            </Text>
           </View>
         ))}
       </View>
