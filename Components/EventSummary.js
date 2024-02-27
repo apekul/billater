@@ -72,7 +72,7 @@ const EventSummary = ({ currentEvent }) => {
               ]}
             >
               <Text style={{ width: 100 }}>{person}</Text>
-              <Text style={{ width: 100, textAlign: "left" }}>
+              <Text style={{ width: 150, textAlign: "left" }}>
                 Spend: {info.spend}
                 <Text style={{ fontSize: 12 }}> {currency}</Text>
               </Text>
