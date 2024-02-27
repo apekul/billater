@@ -1,4 +1,7 @@
 {
+  "androidStatusBar": {
+    "translucent": true
+  },
   "expo": {
     "name": "splitapp",
     "slug": "splitapp",
@@ -21,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.pampalone.splitapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fa531568-2d17-44ae-88fe-d3e71a5d9e73"
+      }
     }
   }
 }

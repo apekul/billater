@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
-
+import { StatusBar } from "expo-status-bar";
 // Components
 import CreateEvent from "./Components/CreateEvent";
 import CreateActivity from "./Components/CreateActivity";
