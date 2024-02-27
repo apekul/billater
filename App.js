@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
-import { StatusBar } from "expo-status-bar";
+import { StatusBar } from "react-native";
 // Components
 import CreateEvent from "./Components/CreateEvent";
 import CreateActivity from "./Components/CreateActivity";
@@ -96,6 +96,7 @@ export default function App() {
     <EventContext.Provider
       value={{ events, setEvents, user, setUser, currency }}
     >
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <NavigationContainer theme={MyTheme}>
         <Stack.Navigator>
           {isLoading ? (
