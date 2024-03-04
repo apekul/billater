@@ -84,6 +84,16 @@ export const stylesEvent = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
+  textInputRadiusTop: {
+    height: 40,
+    fontSize: 15,
+    borderWidth: 1,
+    backgroundColor: "#F6F6F6",
+    borderColor: "#E8E8E8",
+    padding: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
   dateBar: {
     backgroundColor: "#EFEFEF",
     borderRadius: 10,

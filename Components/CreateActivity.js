@@ -4,15 +4,20 @@ import { stylesActivitie } from "../styles/style";
 import { stylesEvent } from "../styles/style";
 import { EventContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
-import { getRandomBase64 } from "react-native-get-random-values";
+// import { getRandomBase64 } from "react-native-get-random-values";
+import ManyUsersInput from "./ManyUsersInput";
 
 const CreateActivity = ({ route, navigation }) => {
   const { events, setEvents, user } = useContext(EventContext);
+  const { id } = route.params;
 
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [buyer, setBuyer] = useState(user);
+
   const [forWho, setForWho] = useState("");
+  // Change forWho to users
+  const [users, setUsers] = useState(["Adam", "Karol"]);
 
   // isValid
   const [titleValid, setTitleValid] = useState(true);
@@ -37,33 +42,6 @@ const CreateActivity = ({ route, navigation }) => {
       navigation.navigate("Event", { id: route.params.id });
     }
   };
-
-  // [
-  //   {
-  //     date: "2024-02-16T16:17:02.671Z",
-  //     id: "8ktlqrua1",
-  //     ppl: 3,
-  //     title: "Kebav",
-  //     value: [
-  //       {
-  //         buyer: "Adam",
-  //         items: [
-  //           {
-  //             name: "test",
-  //             price: 12,
-  //             receipient: "Adas",
-  //           },
-  //           {
-  //             name: "asd",
-  //             price: 20,
-  //             receipient: "Adas",
-  //           },
-  //         ],
-  //         total: "2",
-  //       },
-  //     ],
-  //   },
-  // ];
 
   const buyerExists = (eventId, buyerName) => {
     const event = events.find((item) => item.id === eventId);
@@ -148,20 +126,6 @@ const CreateActivity = ({ route, navigation }) => {
         />
       </View>
 
-      {/* Set Price */}
-      <View>
-        <Text>Price</Text>
-        <TextInput
-          underlineColorAndroid="transparent"
-          style={[stylesEvent.textInput, !priceValid && { borderColor: "red" }]}
-          value={price}
-          placeholder="Price..."
-          keyboardType="numeric"
-          placeholderTextColor="#BDBDBD"
-          onChangeText={(newPrice) => setPrice(newPrice)}
-        />
-      </View>
-
       {/* Set Buyer/for */}
       <View
         style={{
@@ -185,7 +149,23 @@ const CreateActivity = ({ route, navigation }) => {
             onChangeText={(newBuyer) => setBuyer(newBuyer)}
           />
         </View>
+        {/* Set Price */}
         <View style={{ flex: 1 }}>
+          <Text>Price</Text>
+          <TextInput
+            underlineColorAndroid="transparent"
+            style={[
+              stylesEvent.textInput,
+              !priceValid && { borderColor: "red" },
+            ]}
+            value={price}
+            placeholder="Price..."
+            keyboardType="numeric"
+            placeholderTextColor="#BDBDBD"
+            onChangeText={(newPrice) => setPrice(newPrice)}
+          />
+        </View>
+        {/* <View style={{ flex: 1 }}>
           <Text>For</Text>
           <TextInput
             underlineColorAndroid="transparent"
@@ -198,8 +178,10 @@ const CreateActivity = ({ route, navigation }) => {
             placeholderTextColor="#BDBDBD"
             onChangeText={(newForWho) => setForWho(newForWho)}
           />
-        </View>
+        </View> */}
       </View>
+      {/* Include forWhoValid */}
+      <ManyUsersInput id={id} />
 
       <TouchableHighlight
         activeOpacity={0.6}
