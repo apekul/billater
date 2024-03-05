@@ -26,7 +26,6 @@ const CreateEvent = ({ navigation }) => {
     const newItem = {
       id: newID,
       title: title,
-      ppl: 3,
       value: [],
       date: date,
     };
