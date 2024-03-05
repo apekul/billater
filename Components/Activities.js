@@ -15,22 +15,6 @@ import EventSummary from "./EventSummary";
 const Activities = ({ currentEvent, navigation }) => {
   const { setEvents, currency } = useContext(EventContext);
 
-  // pass currentEvent.value, array of payments
-  // const fakeAct = [
-  //   {
-  //     buyer: "John Wick",
-  //     items: [
-  //       {
-  //         name: "Kebab",
-  //         price: 20,
-  //         receipient: "Micha Dzik",
-  //         settle: false,
-  //       },
-  //     ],
-  //     total: 50,
-  //   },
-  // ];
-
   // Update settle onClick boolean
   const updateSettle = (itemId) => {
     const eventId = currentEvent.id;
@@ -56,7 +40,6 @@ const Activities = ({ currentEvent, navigation }) => {
       return updatedData;
     });
   };
-
   const groupedAct = currentEvent.value.reduce((acc, curr) => {
     const buyer = curr.buyer;
     if (!acc[buyer]) {
@@ -98,7 +81,7 @@ const Activities = ({ currentEvent, navigation }) => {
             >
               <Text style={stylesActivitie.txtBold}>{buyer}</Text>
               <Text style={stylesActivitie.txtBold}>
-                total spend {events.total}
+                total spend{" "}
                 {events.map((event, index) => (
                   <Text key={index}>
                     {event.total}

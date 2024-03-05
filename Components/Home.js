@@ -6,13 +6,12 @@ import { EventContext } from "../context";
 
 const Home = ({ navigation }) => {
   const { events, setEvents, user, currency } = useContext(EventContext);
-
+  // console.log(events[0].value[0].items);
   const [balance, setBalance] = useState({
     owe: { txt: "you owe", value: 0, color: "#EF4F2B" },
     owes: { txt: "owes you", value: 0, color: "#24CE85" },
     balance: { txt: "balance", value: 0, color: "#898A8D" },
   });
-
   // Calculate total owe
   function sumPriceForRecipient() {
     let sum = 0;

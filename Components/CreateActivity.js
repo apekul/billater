@@ -15,100 +15,96 @@ const CreateActivity = ({ route, navigation }) => {
   const [price, setPrice] = useState("");
   const [buyer, setBuyer] = useState(user);
 
-  const [forWho, setForWho] = useState("");
   // Change forWho to users
-  const [users, setUsers] = useState(["Adam", "Karol"]);
+  // const [forWho, setForWho] = useState("");
+  const [users, setUsers] = useState([]);
 
   // isValid
   const [titleValid, setTitleValid] = useState(true);
   const [priceValid, setPriceValid] = useState(true);
   const [buyerValid, setBuyerValid] = useState(true);
-  const [forWhoValid, setForWhoValid] = useState(true);
+  // const [forWhoValid, setForWhoValid] = useState(true);
+  const [usersValid, setUsersValid] = useState(true);
 
   const handleSubmit = () => {
     // Validate individual input fields and set validity state accordingly
     const isTitleValid = title.trim() !== "";
     const isPriceValid = price.trim() !== "" && !isNaN(price);
     const isBuyerValid = buyer.trim() !== "";
-    const isForWhoValid = forWho.trim() !== "";
+    const isUserValid = users.length !== 0; // Change to users array
     setTitleValid(isTitleValid);
     setPriceValid(isPriceValid);
     setBuyerValid(isBuyerValid);
-    setForWhoValid(isForWhoValid);
+    // setForWhoValid(isForWhoValid);
+    setUsersValid(isUserValid);
 
     // Submit logic here...
-    if (isTitleValid && isPriceValid && isBuyerValid && isForWhoValid) {
-      addNewAct();
+    if (isTitleValid && isPriceValid && isBuyerValid && isUserValid) {
+      // Create loop that run addNewAct as many timies as is users in users array
+      users.forEach((v) => addNewAct(id, buyer, title, price, v));
       navigation.navigate("Event", { id: route.params.id });
     }
   };
 
-  const buyerExists = (eventId, buyerName) => {
-    const event = events.find((item) => item.id === eventId);
-    if (!event) return false;
-    return event.value.some((val) => val.buyer === buyerName);
-  };
-
-  const addNewAct = () => {
-    const id = route.params.id;
-    const newActID = uuidv4();
+  const addNewAct = (eventId, buyer, title, price, recipient) => {
     const newSubID = uuidv4();
-    const newAct = {
-      id: newActID,
-      buyer: buyer,
-      items: [
-        {
-          id: newSubID,
-          name: title,
-          price: price,
-          receipient: forWho,
-          settle: false,
-        },
-      ],
-      total: price,
-    };
     const newItem = {
       id: newSubID,
       name: title,
       price: price,
-      receipient: forWho,
+      receipient: recipient,
       settle: false,
     };
-    buyerExists(id, buyer)
-      ? // Update array inside event (route.params.id) value (array)
-        setEvents((prev) => {
-          return prev.map((item) => {
-            if (item.id === id) {
-              const updatedValue = item.value.map((val) => {
-                if (val.buyer === buyer) {
-                  const newTotal = +val.total + +price;
-                  return {
-                    ...val,
-                    items: [...val.items, newItem],
-                    total: newTotal,
-                  };
+
+    setEvents((prevEvents) => {
+      return prevEvents.map((event) => {
+        if (event.id === eventId) {
+          const existingBuyerIndex = event.value.findIndex(
+            (val) => val.buyer === buyer
+          );
+
+          if (existingBuyerIndex !== -1) {
+            // If the buyer exists, update the items array for that buyer
+            return {
+              ...event,
+              value: event.value.map((val, index) => {
+                if (index === existingBuyerIndex) {
+                  const existingItemIndex = val.items.findIndex(
+                    (item) => item.id === newSubID
+                  );
+                  if (existingItemIndex === -1) {
+                    // If the item doesn't exist, add it
+                    return {
+                      ...val,
+                      items: [...val.items, newItem],
+                      total: (+val.total + +price).toString(), // Update total
+                    };
+                  } else {
+                    // If the item exists, return the original value without modification
+                    return val;
+                  }
                 }
                 return val;
-              });
-              return {
-                ...item,
-                value: updatedValue,
-              };
-            }
-            return item;
-          });
-        })
-      : setEvents((prev) => {
-          return prev.map((item) => {
-            if (item.id === id) {
-              return {
-                ...item,
-                value: [...item.value, newAct],
-              };
-            }
-            return item;
-          });
-        });
+              }),
+            };
+          } else {
+            // If the buyer doesn't exist, add a new object with the buyer
+            const newActID = uuidv4();
+            const newAct = {
+              id: newActID,
+              buyer: buyer,
+              items: [newItem],
+              total: price,
+            };
+            return {
+              ...event,
+              value: [...event.value, newAct],
+            };
+          }
+        }
+        return event;
+      });
+    });
   };
 
   return (
@@ -181,7 +177,12 @@ const CreateActivity = ({ route, navigation }) => {
         </View> */}
       </View>
       {/* Include forWhoValid */}
-      <ManyUsersInput id={id} />
+      <ManyUsersInput
+        id={id}
+        users={users}
+        setUsers={setUsers}
+        usersValid={usersValid}
+      />
 
       <TouchableHighlight
         activeOpacity={0.6}

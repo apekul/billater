@@ -9,7 +9,6 @@ const Event = ({ route, navigation }) => {
   const { events, currency } = useContext(EventContext);
   const { id } = route.params;
   const currentEvent = events.find((e) => e.id === id);
-
   // Sum total money spend on every events
   // const calculateTotalSum = () => {
   //   const totalSum = events.reduce((acc, event) => {
@@ -31,7 +30,6 @@ const Event = ({ route, navigation }) => {
   };
 
   // add edit func to event (change title, date)
-
   return (
     <SafeAreaView style={[stylesEvent.container]}>
       <View style={{ gap: 10, flex: 1 }}>
