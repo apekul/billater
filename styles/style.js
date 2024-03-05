@@ -116,6 +116,18 @@ export const stylesEvent = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
   },
+  btnCurrency: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    borderLeftWidth: 1,
+    borderColor: "gray",
+    backgroundColor: "lightgray",
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    height: 40,
+    padding: 10,
+  },
   button: {
     borderRadius: 50,
     backgroundColor: "#5DB075",

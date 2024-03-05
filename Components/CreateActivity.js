@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import ManyUsersInput from "./ManyUsersInput";
 
 const CreateActivity = ({ route, navigation }) => {
-  const { events, setEvents, user } = useContext(EventContext);
+  const { events, setEvents, user, currency } = useContext(EventContext);
   const { id } = route.params;
 
   const [title, setTitle] = useState("");
@@ -146,7 +146,7 @@ const CreateActivity = ({ route, navigation }) => {
           />
         </View>
         {/* Set Price */}
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, position: "relative" }}>
           <Text>Price</Text>
           <TextInput
             underlineColorAndroid="transparent"
@@ -160,21 +160,10 @@ const CreateActivity = ({ route, navigation }) => {
             placeholderTextColor="#BDBDBD"
             onChangeText={(newPrice) => setPrice(newPrice)}
           />
+          <View style={stylesEvent.btnCurrency}>
+            <Text style={{ color: "white" }}>{currency}</Text>
+          </View>
         </View>
-        {/* <View style={{ flex: 1 }}>
-          <Text>For</Text>
-          <TextInput
-            underlineColorAndroid="transparent"
-            style={[
-              stylesEvent.textInput,
-              !forWhoValid && { borderColor: "red" },
-            ]}
-            value={forWho}
-            placeholder="For..."
-            placeholderTextColor="#BDBDBD"
-            onChangeText={(newForWho) => setForWho(newForWho)}
-          />
-        </View> */}
       </View>
       {/* Include forWhoValid */}
       <ManyUsersInput
