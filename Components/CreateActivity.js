@@ -165,6 +165,15 @@ const CreateActivity = ({ route, navigation }) => {
           </View>
         </View>
       </View>
+
+      {/* How to split bill */}
+      <View>
+        <Text>How to split the bill</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+          <Text>Split full price evenly</Text>
+          <Text>Everyone same price</Text>
+        </View>
+      </View>
       {/* Include forWhoValid */}
       <ManyUsersInput
         id={id}

@@ -5,13 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from "react-native";
 import IconMat from "react-native-vector-icons/MaterialIcons";
 import { stylesEvent } from "../styles/style";
 import { EventContext } from "../context";
 
 const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
-  const { events } = useContext(EventContext);
+  const { events, user } = useContext(EventContext);
   const [allUsers, setAllUsers] = useState([]);
   const [newUser, setNewUser] = useState("");
 
@@ -33,7 +34,8 @@ const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
   // Add new user to AllUsers
   const addUser = () => {
     if (newUser.trim() !== "" && !allUsers.includes(newUser.trim())) {
-      setAllUsers((prev) => [...prev, newUser.trim()]);
+      setAllUsers((prev) => [newUser.trim(), ...prev]);
+      updateUsers(newUser.trim());
       setNewUser("");
     }
   };
@@ -47,10 +49,10 @@ const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
     }
   };
 
-  const removeUser = (index) => {
-    const removed = users.filter((v, i) => i !== index);
-    setUsers(removed);
-  };
+  // const removeUser = (index) => {
+  //   const removed = users.filter((v, i) => i !== index);
+  //   setUsers(removed);
+  // };
 
   useEffect(() => {
     setAllUsers(getUniqueUsers());
@@ -104,10 +106,28 @@ const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
             <Text style={{ color: "white" }}>Add</Text>
           </TouchableOpacity>
         </View>
-
+        {/* SelectedUsers */}
+        {users.length > 0 && (
+          <View style={{ marginVertical: 5 }}>
+            <Text>Selected users:</Text>
+            <View style={{ flexDirection: "row", gap: 5, flexWrap: "wrap" }}>
+              {users.map((user) => (
+                <Text
+                  style={{
+                    backgroundColor: "#E8E8E8",
+                    paddingHorizontal: 5,
+                    paddingVertical: 2,
+                  }}
+                >
+                  {user}
+                </Text>
+              ))}
+            </View>
+          </View>
+        )}
         <FlatList
           data={allUsers}
-          style={{ backgroundColor: "#F6F6F6" }}
+          style={{ backgroundColor: "#F6F6F6", maxHeight: 200 }}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <View
@@ -133,7 +153,7 @@ const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
                   paddingVertical: 10,
                 }}
               >
-                {item}
+                {item} {item === user && "(You)"}
               </Text>
             </View>
           )}
