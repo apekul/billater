@@ -72,8 +72,22 @@ export const stylesHome = StyleSheet.create({
 export const stylesEvent = StyleSheet.create({
   container: {
     flex: 1,
-    // marginHorizontal: 16,
     gap: 10,
+  },
+  splitOptionGrp: {
+    position: "absolute",
+    top: 60,
+    zIndex: 1,
+    backgroundColor: "#dddddd",
+    width: "100%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   textInput: {
     height: 40,

@@ -111,8 +111,9 @@ const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
           <View style={{ marginVertical: 5 }}>
             <Text>Selected users:</Text>
             <View style={{ flexDirection: "row", gap: 5, flexWrap: "wrap" }}>
-              {users.map((user) => (
+              {users.map((user, i) => (
                 <Text
+                  key={i}
                   style={{
                     backgroundColor: "#E8E8E8",
                     paddingHorizontal: 5,

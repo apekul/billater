@@ -4,8 +4,13 @@ import { stylesActivitie } from "../styles/style";
 import { stylesEvent } from "../styles/style";
 import { EventContext } from "../context";
 import { v4 as uuidv4 } from "uuid";
-// import { getRandomBase64 } from "react-native-get-random-values";
+import AntIcon from "react-native-vector-icons/AntDesign";
 import ManyUsersInput from "./ManyUsersInput";
+
+const splitOptions = [
+  { id: 1, text: "Split full price evenly" },
+  { id: 2, text: "Everyone same price value" },
+];
 
 const CreateActivity = ({ route, navigation }) => {
   const { events, setEvents, user, currency } = useContext(EventContext);
@@ -15,9 +20,12 @@ const CreateActivity = ({ route, navigation }) => {
   const [price, setPrice] = useState("");
   const [buyer, setBuyer] = useState(user);
 
-  // Change forWho to users
-  // const [forWho, setForWho] = useState("");
+  // users list recipients
   const [users, setUsers] = useState([]);
+
+  // Split options
+  const [splitOpt, setSplitOpt] = useState(splitOptions[0]);
+  const [showOpt, setShowOpt] = useState(false);
 
   // isValid
   const [titleValid, setTitleValid] = useState(true);
@@ -47,11 +55,12 @@ const CreateActivity = ({ route, navigation }) => {
   };
 
   const addNewAct = (eventId, buyer, title, price, recipient) => {
+    const clacPrice = () => (splitOpt.id === 1 ? price / users.length : price);
     const newSubID = uuidv4();
     const newItem = {
       id: newSubID,
       name: title,
-      price: price,
+      price: clacPrice(),
       receipient: recipient,
       settle: false,
     };
@@ -77,7 +86,7 @@ const CreateActivity = ({ route, navigation }) => {
                     return {
                       ...val,
                       items: [...val.items, newItem],
-                      total: (+val.total + +price).toString(), // Update total
+                      total: (+val.total + +clacPrice()).toString(), // Update total
                     };
                   } else {
                     // If the item exists, return the original value without modification
@@ -94,7 +103,7 @@ const CreateActivity = ({ route, navigation }) => {
               id: newActID,
               buyer: buyer,
               items: [newItem],
-              total: price,
+              total: clacPrice(),
             };
             return {
               ...event,
@@ -169,10 +178,51 @@ const CreateActivity = ({ route, navigation }) => {
       {/* How to split bill */}
       <View>
         <Text>How to split the bill</Text>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-          <Text>Split full price evenly</Text>
-          <Text>Everyone same price</Text>
-        </View>
+        <TouchableHighlight
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          style={stylesEvent.textInput}
+          value={price}
+          onPress={() => setShowOpt(!showOpt)}
+        >
+          <View>
+            <Text>{splitOpt.text}</Text>
+            <AntIcon
+              name="caretdown"
+              size={15}
+              color="black"
+              style={[
+                {
+                  position: "absolute",
+                  right: 0,
+                },
+                showOpt && { transform: "rotate(180deg)" },
+              ]}
+            />
+          </View>
+        </TouchableHighlight>
+        {showOpt && (
+          <View style={stylesEvent.splitOptionGrp}>
+            {splitOptions.map((opt, i) => (
+              <TouchableHighlight
+                activeOpacity={0.6}
+                underlayColor="#DDDDDD"
+                key={i}
+                style={{
+                  paddingVertical: 10,
+                  paddingHorizontal: 15,
+                  borderWidth: 0.5,
+                }}
+                onPress={() => {
+                  setShowOpt(false);
+                  setSplitOpt(opt);
+                }}
+              >
+                <Text>{opt.text}</Text>
+              </TouchableHighlight>
+            ))}
+          </View>
+        )}
       </View>
       {/* Include forWhoValid */}
       <ManyUsersInput
