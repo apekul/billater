@@ -13,7 +13,7 @@ import { EventContext } from "../context";
 import EventSummary from "./EventSummary";
 
 const Activities = ({ currentEvent, navigation }) => {
-  const { setEvents, currency } = useContext(EventContext);
+  const { setEvents, currency, user } = useContext(EventContext);
 
   // Update settle onClick boolean
   const updateSettle = (itemId) => {
@@ -138,7 +138,9 @@ const Activities = ({ currentEvent, navigation }) => {
                           { textAlign: "center" },
                         ]}
                       >
-                        {act.receipient}
+                        {act.receipient === user
+                          ? act.receipient + " (You)"
+                          : act.receipient}
                       </Text>
                       <Text
                         style={[

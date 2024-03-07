@@ -62,7 +62,7 @@ const CreateActivity = ({ route, navigation }) => {
       name: title,
       price: clacPrice(),
       receipient: recipient,
-      settle: false,
+      settle: user === recipient ? true : false,
     };
 
     setEvents((prevEvents) => {
