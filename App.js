@@ -96,7 +96,7 @@ export default function App() {
     <EventContext.Provider
       value={{ events, setEvents, user, setUser, currency }}
     >
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <StatusBar barStyle="white-content" backgroundColor="#273c75" />
       <NavigationContainer theme={MyTheme}>
         <Stack.Navigator>
           {isLoading ? (

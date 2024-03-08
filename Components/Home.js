@@ -6,7 +6,6 @@ import { EventContext } from "../context";
 
 const Home = ({ navigation }) => {
   const { events, setEvents, user, currency } = useContext(EventContext);
-  // console.log(events[0].value[0].items);
   const [balance, setBalance] = useState({
     balance: { txt: "Total Balance", value: 0, color: "#898A8D" },
     owe: { txt: "you owe", value: 0, color: "#EF4F2B" },
@@ -24,7 +23,7 @@ const Home = ({ navigation }) => {
         });
       });
     });
-    return -sum;
+    return sum;
   }
 
   // Calculate total owes
@@ -47,7 +46,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const oweValue = sumPriceForRecipient();
     const owesValue = getTotalForBuyer();
-    const balanceValue = oweValue - owesValue;
+    const balanceValue = owesValue - oweValue;
     setBalance((prev) => ({
       balance: {
         ...prev.balance,

@@ -35,7 +35,6 @@ const EventList = ({ navigation }) => {
         moment(b.date, "MMMM Do YYYY").toDate()
       );
     });
-  console.log(groupedItems);
   const calculateTotalSum = (currentEvent) => {
     const totalSum = currentEvent.value.reduce((acc, curr) => {
       acc += +curr.total;
