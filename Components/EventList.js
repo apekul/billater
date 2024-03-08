@@ -23,10 +23,19 @@ const EventList = ({ navigation }) => {
     }
 
     acc[date].push(event);
-
     return acc;
   }, {});
 
+  // Sort date
+  const groupedItemsArray = Object.entries(groupedItems)
+    .map(([date, events]) => ({ date, events }))
+    .sort((a, b) => {
+      return (
+        moment(a.date, "MMMM Do YYYY").toDate() -
+        moment(b.date, "MMMM Do YYYY").toDate()
+      );
+    });
+  console.log(groupedItems);
   const calculateTotalSum = (currentEvent) => {
     const totalSum = currentEvent.value.reduce((acc, curr) => {
       acc += +curr.total;

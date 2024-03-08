@@ -8,9 +8,9 @@ const Home = ({ navigation }) => {
   const { events, setEvents, user, currency } = useContext(EventContext);
   // console.log(events[0].value[0].items);
   const [balance, setBalance] = useState({
+    balance: { txt: "Total Balance", value: 0, color: "#898A8D" },
     owe: { txt: "you owe", value: 0, color: "#EF4F2B" },
     owes: { txt: "owes you", value: 0, color: "#24CE85" },
-    balance: { txt: "balance", value: 0, color: "#898A8D" },
   });
   // Calculate total owe
   function sumPriceForRecipient() {
@@ -47,14 +47,14 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const oweValue = sumPriceForRecipient();
     const owesValue = getTotalForBuyer();
-    const balanceValue = owesValue + oweValue;
+    const balanceValue = oweValue - owesValue;
     setBalance((prev) => ({
-      owe: { ...prev.owe, value: oweValue },
-      owes: { ...prev.owes, value: owesValue },
       balance: {
         ...prev.balance,
         value: balanceValue,
       },
+      owe: { ...prev.owe, value: oweValue },
+      owes: { ...prev.owes, value: owesValue },
     }));
   }, [events]);
 
@@ -62,9 +62,9 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={stylesHome.container}>
       <View style={stylesHome.list}>
         {Object.values(balance).map((v, i) => (
-          <View key={i}>
-            <Text style={[stylesHome.txt, { color: v.color }]}>{v.txt}:</Text>
-            <Text style={[stylesHome.txt, { color: v.color }]}>
+          <View key={i} style={{ justifyContent: "center" }}>
+            <Text style={stylesHome.txt}>{v.txt}:</Text>
+            <Text style={i === 0 ? stylesHome.txtBalance : stylesHome.txt}>
               {v.value} <Text style={{ fontSize: 12 }}>{currency}</Text>
             </Text>
           </View>

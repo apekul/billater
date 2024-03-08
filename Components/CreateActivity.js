@@ -60,9 +60,9 @@ const CreateActivity = ({ route, navigation }) => {
     const newItem = {
       id: newSubID,
       name: title,
-      price: clacPrice(),
+      price: clacPrice().toFixed(2),
       receipient: recipient,
-      settle: user === recipient ? true : false,
+      settle: buyer === recipient ? true : false,
     };
 
     setEvents((prevEvents) => {

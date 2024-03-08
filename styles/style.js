@@ -1,5 +1,11 @@
 import { StyleSheet } from "react-native";
 
+const colors = {
+  mainBG: "#273c75",
+  txtLight: "white",
+  txtDark: "black",
+};
+
 export const stylesLogin = StyleSheet.create({
   container: {
     flex: 1,
@@ -51,8 +57,14 @@ export const stylesLogin = StyleSheet.create({
 
 export const stylesHome = StyleSheet.create({
   txt: {
-    fontWeight: "bold",
     textAlign: "center",
+    color: colors.txtLight,
+  },
+  txtBalance: {
+    textAlign: "center",
+    fontSize: 20,
+    color: colors.txtLight,
+    fontWeight: "bold",
   },
   container: {
     flex: 1,
@@ -60,10 +72,14 @@ export const stylesHome = StyleSheet.create({
     gap: 20,
   },
   list: {
-    backgroundColor: "#EFEFEF",
-    borderRadius: 5,
-    marginHorizontal: 16,
-    padding: 10,
+    // backgroundColor: "#EFEFEF",
+    backgroundColor: colors.mainBG,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    paddingHorizontal: 30,
+    // paddingVertical: 25,
+    paddingBottom: 40,
+    paddingTop: 10,
     flexDirection: "row",
     justifyContent: "space-between",
   },

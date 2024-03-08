@@ -113,13 +113,20 @@ export default function App() {
               name="Home"
               component={Home}
               options={({ navigation }) => ({
-                title: user ? "Logged as " + user : "Home",
+                title: user ? "Hello, " + user : "Home",
                 headerLeft: null,
+                headerStyle: {
+                  backgroundColor: "#273c75",
+                  borderWidth: 1,
+                  borderColor: "#273c75",
+                  elevation: 0,
+                },
+                headerTintColor: "white",
                 headerRight: () => (
                   <Icon
                     name="logout"
                     size={20}
-                    color="black"
+                    color="white"
                     style={{ marginRight: 20 }}
                     onPress={() => {
                       setUser("");
