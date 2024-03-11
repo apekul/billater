@@ -118,25 +118,11 @@ const EventList = ({ navigation }) => {
 
   return (
     <View style={stylesEvent.eventListGrp}>
-      {/* Add event Button */}
-      <View style={stylesEvent.btn}>
-        <TouchableHighlight
-          activeOpacity={0.6}
-          underlayColor="#DDDDDD"
-          // style={stylesEvent.btn}
-          onPress={() => {
-            setSelectedItems([]);
-            setToggleDelete(false);
-            return navigation.navigate("CreateEvent");
-          }}
-        >
-          <IconMat name="add-box" size={40} color="#898A8D" />
-        </TouchableHighlight>
-      </View>
-
       {/* Confirm/Cancel Delete */}
       {toggleDelete && (
-        <View style={[stylesEvent.group, { paddingHorizontal: 16 }]}>
+        <View
+          style={[stylesEvent.group, { paddingHorizontal: 16, paddingTop: 10 }]}
+        >
           <TouchableHighlight
             activeOpacity={0.6}
             underlayColor="#DDDDDD"
@@ -238,7 +224,7 @@ const EventList = ({ navigation }) => {
                         {checkSettle(event) ? (
                           <Text style={{ color: "#2ecc71" }}>setteled up</Text>
                         ) : (
-                          <Text style={{ textAlign: "right" }}>Balance</Text>
+                          <Text style={{ textAlign: "right" }}>balance</Text>
                         )}
                         <Text style={{ textAlign: "right" }}>
                           {calculateTotalSum(event)}
@@ -252,9 +238,53 @@ const EventList = ({ navigation }) => {
             </View>
           ))
         ) : (
-          <Text>No items</Text>
+          <View style={{ alignItems: "center" }}>
+            <Text>No items</Text>
+          </View>
         )}
+        <View style={{ height: 100 }}></View>
       </ScrollView>
+
+      {/* AddBtn */}
+      <TouchableHighlight
+        activeOpacity={0.6}
+        underlayColor="transparent" // Make underlay color transparent
+        style={{
+          position: "absolute",
+          bottom: 5,
+          right: 5,
+        }}
+        onPress={() => {
+          setSelectedItems([]);
+          setToggleDelete(false);
+          return navigation.navigate("CreateEvent");
+        }}
+      >
+        <View
+          style={{
+            position: "relative",
+            alignItems: "center",
+          }}
+        >
+          <IconMat
+            name="add-box"
+            size={90}
+            color="#5DB075"
+            style={{
+              zIndex: 1,
+            }}
+          />
+          <View
+            style={{
+              width: 60,
+              height: 60,
+              top: 15,
+              backgroundColor: "white",
+              position: "absolute",
+            }}
+          ></View>
+        </View>
+      </TouchableHighlight>
     </View>
   );
 };

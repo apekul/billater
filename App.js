@@ -152,12 +152,19 @@ export default function App() {
             component={Event}
             options={({ route, navigation }) => ({
               title: "Event",
+              headerStyle: {
+                backgroundColor: "#4a69bd",
+                borderWidth: 1,
+                borderColor: "#4a69bd",
+                elevation: 0,
+              },
+              headerTintColor: "white",
               // title: events.find((event) => event.id === route.params.id).title,
               headerLeft: () => (
                 <Icon
                   name="arrowleft"
                   size={23}
-                  color="black"
+                  color="white"
                   style={{ marginLeft: 15, marginRight: 15 }}
                   onPress={() => {
                     navigation.navigate("Home");

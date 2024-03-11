@@ -55,7 +55,7 @@ const Activities = ({ currentEvent, navigation }) => {
         Activities:
       </Text>
       {/* Add event Button */}
-      <TouchableHighlight
+      {/* <TouchableHighlight
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
         style={[stylesEvent.btn, { marginHorizontal: 16 }]}
@@ -64,7 +64,7 @@ const Activities = ({ currentEvent, navigation }) => {
         }}
       >
         <IconMat name="add-box" size={40} color="#898A8D" />
-      </TouchableHighlight>
+      </TouchableHighlight> */}
 
       {/* List */}
       <ScrollView style={{ paddingHorizontal: 16 }}>
@@ -162,6 +162,47 @@ const Activities = ({ currentEvent, navigation }) => {
           <EventSummary currentEvent={currentEvent} />
         )}
       </ScrollView>
+
+      {/* Add new Act */}
+      <TouchableHighlight
+        activeOpacity={0.6}
+        underlayColor="transparent" // Make underlay color transparent
+        style={{
+          position: "absolute",
+          bottom: 5,
+          right: 5,
+        }}
+        onPress={() => {
+          return navigation.navigate("CreateActivity", {
+            id: currentEvent.id,
+          });
+        }}
+      >
+        <View
+          style={{
+            position: "relative",
+            alignItems: "center",
+          }}
+        >
+          <IconMat
+            name="add-box"
+            size={90}
+            color="#5DB075"
+            style={{
+              zIndex: 1,
+            }}
+          />
+          <View
+            style={{
+              width: 60,
+              height: 60,
+              top: 15,
+              backgroundColor: "white",
+              position: "absolute",
+            }}
+          ></View>
+        </View>
+      </TouchableHighlight>
     </View>
   );
 };

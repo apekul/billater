@@ -97,7 +97,9 @@ export const stylesHome = StyleSheet.create({
 export const stylesEvent = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 10,
     gap: 10,
+    backgroundColor: "#FDFDFD",
   },
   eventGrp: {
     shadowColor: "#000",
@@ -116,7 +118,6 @@ export const stylesEvent = StyleSheet.create({
   eventListGrp: {
     backgroundColor: "#FDFDFD",
     flex: 1,
-    // gap: 20,
     paddingTop: 10,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -212,6 +213,7 @@ export const stylesActivitie = StyleSheet.create({
   txtBold: {
     fontWeight: "bold",
     fontSize: 15,
+    color: colors.txtDark,
   },
   group: {
     flexDirection: "row",

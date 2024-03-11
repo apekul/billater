@@ -49,7 +49,7 @@ const EventSummary = ({ currentEvent }) => {
     return summary;
   };
   return (
-    <View style={{ marginVertical: 10 }}>
+    <View style={{ marginVertical: 10, marginBottom: 60 }}>
       <Text style={stylesSummary.header}>Summary</Text>
       <View style={stylesSummary.container}>
         <View style={stylesSummary.group}>
