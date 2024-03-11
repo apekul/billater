@@ -96,12 +96,11 @@ export default function App() {
     <EventContext.Provider
       value={{ events, setEvents, user, setUser, currency }}
     >
-      <StatusBar barStyle="white-content" backgroundColor="#273c75" />
+      <StatusBar barStyle="white-content" backgroundColor="#4a69bd" />
       <NavigationContainer theme={MyTheme}>
         <Stack.Navigator>
           {isLoading ? (
             // Show a loading screen or indicator while retrieving user data
-            // You can customize this according to your UI/UX design
             <Stack.Screen
               name="Loading"
               component={Loading}
@@ -116,9 +115,9 @@ export default function App() {
                 title: user ? "Hello, " + user : "Home",
                 headerLeft: null,
                 headerStyle: {
-                  backgroundColor: "#273c75",
+                  backgroundColor: "#4a69bd",
                   borderWidth: 1,
-                  borderColor: "#273c75",
+                  borderColor: "#4a69bd",
                   elevation: 0,
                 },
                 headerTintColor: "white",
@@ -159,7 +158,20 @@ export default function App() {
               ),
             })}
           />
-          <Stack.Screen name="CreateEvent" component={CreateEvent} />
+          <Stack.Screen
+            name="CreateEvent"
+            options={() => ({
+              title: "Create Event",
+              headerStyle: {
+                backgroundColor: "#4a69bd",
+                borderWidth: 1,
+                borderColor: "#4a69bd",
+                elevation: 0,
+              },
+              headerTintColor: "white",
+            })}
+            component={CreateEvent}
+          />
           <Stack.Screen name="CreateActivity" component={CreateActivity} />
         </Stack.Navigator>
       </NavigationContainer>

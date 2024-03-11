@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
 
 const colors = {
-  mainBG: "#273c75",
+  mainBG: "#4a69bd",
   txtLight: "white",
-  txtDark: "black",
+  txtDark: "#333333",
 };
 
 export const stylesLogin = StyleSheet.create({
@@ -57,29 +57,38 @@ export const stylesLogin = StyleSheet.create({
 
 export const stylesHome = StyleSheet.create({
   txt: {
-    textAlign: "center",
-    color: colors.txtLight,
+    color: colors.txtDark,
+    fontWeight: "bold",
   },
   txtBalance: {
-    textAlign: "center",
     fontSize: 20,
-    color: colors.txtLight,
+    color: colors.txtDark,
     fontWeight: "bold",
   },
   container: {
     flex: 1,
-    // marginHorizontal: 16,
-    gap: 20,
+    // gap: 20,
+    backgroundColor: colors.mainBG,
   },
   list: {
-    // backgroundColor: "#EFEFEF",
-    backgroundColor: colors.mainBG,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    paddingHorizontal: 30,
-    // paddingVertical: 25,
-    paddingBottom: 40,
-    paddingTop: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 15,
+
+    backgroundColor: "white",
+    marginHorizontal: 15,
+    paddingVertical: 15,
+    borderRadius: 15,
+    paddingHorizontal: 15,
+    marginBottom: 25,
+    marginTop: 10,
+    // paddingBottom: 20,
+    // paddingTop: 10,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -89,6 +98,28 @@ export const stylesEvent = StyleSheet.create({
   container: {
     flex: 1,
     gap: 10,
+  },
+  eventGrp: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    marginHorizontal: 5,
+    marginVertical: 4,
+    borderRadius: 10,
+    backgroundColor: "white",
+  },
+  eventListGrp: {
+    backgroundColor: "#FDFDFD",
+    flex: 1,
+    // gap: 20,
+    paddingTop: 10,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
   },
   splitOptionGrp: {
     position: "absolute",
@@ -124,15 +155,19 @@ export const stylesEvent = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
+  txt: {
+    color: colors.txtDark,
+    fontWeight: "bold",
+  },
   dateBar: {
     backgroundColor: "#EFEFEF",
     borderRadius: 10,
-    paddingVertical: 5,
+    paddingVertical: 10,
     marginBottom: 5,
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     backgroundColor: "#898A8D",
     borderRadius: 5,
   },
@@ -142,8 +177,11 @@ export const stylesEvent = StyleSheet.create({
     justifyContent: "space-between",
   },
   btn: {
-    backgroundColor: "#EFEFEF",
+    // backgroundColor: "#EFEFEF",
+    marginHorizontal: 32,
+    // marginBottom: 10,
     borderRadius: 5,
+    padding: 3,
     alignItems: "center",
   },
   btnCurrency: {

@@ -7,9 +7,9 @@ import { EventContext } from "../context";
 const Home = ({ navigation }) => {
   const { events, setEvents, user, currency } = useContext(EventContext);
   const [balance, setBalance] = useState({
-    balance: { txt: "Total Balance", value: 0, color: "#898A8D" },
-    owe: { txt: "you owe", value: 0, color: "#EF4F2B" },
-    owes: { txt: "owes you", value: 0, color: "#24CE85" },
+    balance: { txt: "Total Balance", value: 0, color: "#898A8D", id: 1 },
+    owe: { txt: "you owe", value: 0, color: "#EF4F2B", id: 2 },
+    owes: { txt: "owes you", value: 0, color: "#24CE85", id: 3 },
   });
   // Calculate total owe
   function sumPriceForRecipient() {
@@ -62,10 +62,28 @@ const Home = ({ navigation }) => {
       <View style={stylesHome.list}>
         {Object.values(balance).map((v, i) => (
           <View key={i} style={{ justifyContent: "center" }}>
-            <Text style={stylesHome.txt}>{v.txt}:</Text>
-            <Text style={i === 0 ? stylesHome.txtBalance : stylesHome.txt}>
-              {v.value} <Text style={{ fontSize: 12 }}>{currency}</Text>
-            </Text>
+            {i === 0 ? (
+              <>
+                <Text style={stylesHome.txtBalance}>
+                  {v.value} <Text style={{ fontSize: 12 }}>{currency}</Text>
+                </Text>
+                <Text style={stylesHome.txt}>{v.txt}</Text>
+              </>
+            ) : (
+              <>
+                <Text
+                  style={[
+                    { fontWeight: "bold" },
+                    v.id === 2 ? { color: "red" } : { color: "#2ecc71" },
+                  ]}
+                >
+                  {v.txt}
+                </Text>
+                <Text style={[stylesHome.txt, { fontWeight: "bold" }]}>
+                  {v.value} <Text style={{ fontSize: 12 }}>{currency}</Text>
+                </Text>
+              </>
+            )}
           </View>
         ))}
       </View>

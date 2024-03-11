@@ -27,14 +27,14 @@ const EventList = ({ navigation }) => {
   }, {});
 
   // Sort date
-  const groupedItemsArray = Object.entries(groupedItems)
-    .map(([date, events]) => ({ date, events }))
-    .sort((a, b) => {
-      return (
-        moment(a.date, "MMMM Do YYYY").toDate() -
-        moment(b.date, "MMMM Do YYYY").toDate()
-      );
-    });
+  // const groupedItemsArray = Object.entries(groupedItems)
+  //   .map(([date, events]) => ({ date, events }))
+  //   .sort((a, b) => {
+  //     return (
+  //       moment(a.date, "MMMM Do YYYY").toDate() -
+  //       moment(b.date, "MMMM Do YYYY").toDate()
+  //     );
+  //   });
   const calculateTotalSum = (currentEvent) => {
     const totalSum = currentEvent.value.reduce((acc, curr) => {
       acc += +curr.total;
@@ -117,20 +117,22 @@ const EventList = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, gap: 10 }}>
+    <View style={stylesEvent.eventListGrp}>
       {/* Add event Button */}
-      <TouchableHighlight
-        activeOpacity={0.6}
-        underlayColor="#DDDDDD"
-        style={[stylesEvent.btn, { marginHorizontal: 16 }]}
-        onPress={() => {
-          setSelectedItems([]);
-          setToggleDelete(false);
-          return navigation.navigate("CreateEvent");
-        }}
-      >
-        <IconMat name="add-box" size={40} color="#898A8D" />
-      </TouchableHighlight>
+      <View style={stylesEvent.btn}>
+        <TouchableHighlight
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          // style={stylesEvent.btn}
+          onPress={() => {
+            setSelectedItems([]);
+            setToggleDelete(false);
+            return navigation.navigate("CreateEvent");
+          }}
+        >
+          <IconMat name="add-box" size={40} color="#898A8D" />
+        </TouchableHighlight>
+      </View>
 
       {/* Confirm/Cancel Delete */}
       {toggleDelete && (
@@ -168,7 +170,14 @@ const EventList = ({ navigation }) => {
           Object.entries(groupedItems).map(([date, events], i) => (
             <View key={i} style={{ marginVertical: 10 }}>
               <View style={stylesEvent.dateBar}>
-                <Text style={{ paddingHorizontal: 10, fontWeight: "bold" }}>
+                <Text
+                  style={[
+                    stylesEvent.txt,
+                    {
+                      paddingHorizontal: 10,
+                    },
+                  ]}
+                >
                   {date}
                 </Text>
               </View>
@@ -178,11 +187,7 @@ const EventList = ({ navigation }) => {
                     key={j}
                     activeOpacity={0.6}
                     underlayColor="#DDDDDD"
-                    style={[
-                      j % 2 && {
-                        backgroundColor: "#EFEFEF",
-                      },
-                    ]}
+                    style={[stylesEvent.eventGrp]}
                     onLongPress={() => setToggleDelete(true)}
                     onPress={() =>
                       toggleDelete
@@ -190,7 +195,14 @@ const EventList = ({ navigation }) => {
                         : navigation.navigate("Event", { id: event.id })
                     }
                   >
-                    <View style={[stylesEvent.group, { padding: 5 }]}>
+                    <View
+                      style={[
+                        stylesEvent.group,
+                        {
+                          padding: 5,
+                        },
+                      ]}
+                    >
                       <View style={[stylesEvent.group, { gap: 10 }]}>
                         <View style={{ position: "relative" }}>
                           {toggleDelete ? (
@@ -215,16 +227,16 @@ const EventList = ({ navigation }) => {
                         </View>
 
                         <View>
-                          <Text style={{ fontWeight: "bold" }}>
+                          <Text style={stylesEvent.txt}>
                             {event.title ? event.title : "No title"}
                           </Text>
                           <Text>{countUniqueUsers(event)} participant</Text>
                         </View>
                       </View>
 
-                      <View>
+                      <View style={{ padding: 10 }}>
                         {checkSettle(event) ? (
-                          <Text style={{ color: "#24CE85" }}>setteled up</Text>
+                          <Text style={{ color: "#2ecc71" }}>setteled up</Text>
                         ) : (
                           <Text style={{ textAlign: "right" }}>Balance</Text>
                         )}

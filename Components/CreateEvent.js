@@ -32,7 +32,9 @@ const CreateEvent = ({ navigation }) => {
     setEvents((prev) => [...prev, newItem]);
   };
   return (
-    <View style={[stylesEvent.container, { paddingHorizontal: 16 }]}>
+    <View
+      style={[stylesEvent.container, { paddingHorizontal: 16, marginTop: 10 }]}
+    >
       <View>
         <Text>Event Title</Text>
         <TextInput
