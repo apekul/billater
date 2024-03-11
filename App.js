@@ -15,7 +15,10 @@ import { EventContext } from "./context";
 
 // Navigation
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 
 // Storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -98,7 +101,12 @@ export default function App() {
     >
       <StatusBar barStyle="white-content" backgroundColor="#4a69bd" />
       <NavigationContainer theme={MyTheme}>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            gestureEnabled: true, // Enable gestures if needed
+            ...TransitionPresets.SlideFromRightIOS, // Use slide-right animation
+          }}
+        >
           {isLoading ? (
             // Show a loading screen or indicator while retrieving user data
             <Stack.Screen
