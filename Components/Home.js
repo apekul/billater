@@ -42,7 +42,6 @@ const Home = ({ navigation }) => {
     });
     return total;
   };
-
   useEffect(() => {
     const oweValue = sumPriceForRecipient();
     const owesValue = getTotalForBuyer();
@@ -61,7 +60,21 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={stylesHome.container}>
       <View style={stylesHome.list}>
         {Object.values(balance).map((v, i) => (
-          <View key={i} style={{ justifyContent: "center" }}>
+          <View
+            key={i}
+            style={[
+              {
+                justifyContent: "center",
+                flex: 1,
+                paddingVertical: 3,
+              },
+              i !== 0 && {
+                alignItems: "center",
+                borderLeftWidth: 2,
+                borderStyle: "dashed",
+              },
+            ]}
+          >
             {i === 0 ? (
               <>
                 <Text style={stylesHome.txtBalance}>

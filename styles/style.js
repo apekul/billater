@@ -97,7 +97,7 @@ export const stylesHome = StyleSheet.create({
 export const stylesEvent = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10,
+    // marginTop: 10,
     gap: 10,
     backgroundColor: "#FDFDFD",
   },
@@ -156,7 +156,11 @@ export const stylesEvent = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  txt: {
+  txtLight: {
+    color: colors.txtLight,
+    fontWeight: "bold",
+  },
+  txtDark: {
     color: colors.txtDark,
     fontWeight: "bold",
   },
@@ -241,6 +245,19 @@ export const stylesActivitie = StyleSheet.create({
   actItem: {
     width: 100,
     fontSize: 15,
+  },
+  actGroup: {
+    marginBottom: 20,
+    backgroundColor: "#E8E8E8",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

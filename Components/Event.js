@@ -28,6 +28,8 @@ const Event = ({ route, navigation }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "flex-end",
+            backgroundColor: "#4a69bd",
+            paddingBottom: 10,
           }}
         >
           <View
@@ -35,17 +37,25 @@ const Event = ({ route, navigation }) => {
               paddingHorizontal: 16,
             }}
           >
-            <Text style={[stylesEvent.txt, { fontSize: 20 }]}>
+            <Text style={[stylesEvent.txtLight, { fontSize: 20 }]}>
               {currentEvent.title ? currentEvent.title : "No title"}
             </Text>
-            <Text style={stylesEvent.txt}>
+            <Text style={stylesEvent.txtLight}>
               {moment(currentEvent.date).format("MMMM Do YYYY")}
             </Text>
           </View>
-          <Text style={[stylesEvent.txt, { paddingHorizontal: 16 }]}>
-            Total spend: {calculateTotalSum()}
-            <Text style={{ fontSize: 12 }}> {currency}</Text>
-          </Text>
+          <View
+            style={{
+              paddingHorizontal: 16,
+              flex: 1,
+              alignItems: "flex-end",
+            }}
+          >
+            <Text style={[stylesEvent.txtLight, { fontSize: 20 }]}>
+              {calculateTotalSum()} {currency}
+            </Text>
+            <Text style={[stylesEvent.txtLight]}>Total money spend</Text>
+          </View>
         </View>
         <Activities currentEvent={currentEvent} navigation={navigation} />
       </View>

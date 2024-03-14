@@ -54,32 +54,36 @@ const Activities = ({ currentEvent, navigation }) => {
       <Text style={[stylesActivitie.txtBold, { paddingHorizontal: 16 }]}>
         Activities:
       </Text>
-      {/* Add event Button */}
-      {/* <TouchableHighlight
-        activeOpacity={0.6}
-        underlayColor="#DDDDDD"
-        style={[stylesEvent.btn, { marginHorizontal: 16 }]}
-        onPress={() => {
-          return navigation.navigate("CreateActivity", { id: currentEvent.id });
-        }}
-      >
-        <IconMat name="add-box" size={40} color="#898A8D" />
-      </TouchableHighlight> */}
 
       {/* List */}
-      <ScrollView style={{ paddingHorizontal: 16 }}>
+      <ScrollView
+        style={{
+          paddingHorizontal: 16,
+        }}
+      >
         {Object.entries(groupedAct).map(([buyer, events], i) => (
-          <View key={i} style={{ marginBottom: 10 }}>
+          <View key={i} style={stylesActivitie.actGroup}>
             <View
               style={[
                 stylesActivitie.group,
                 {
                   backgroundColor: "#F6F6F6",
-                  padding: 5,
+                  padding: 10,
                 },
               ]}
             >
-              <Text style={stylesActivitie.txtBold}>{buyer}</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 5,
+                }}
+              >
+                <Text style={stylesActivitie.txtBold}>
+                  {buyer} {buyer === user && "(You)"}
+                </Text>
+                <Text>bought</Text>
+              </View>
               <Text style={stylesActivitie.txtBold}>
                 total spend{" "}
                 {events.map((event, index) => (
@@ -94,7 +98,7 @@ const Activities = ({ currentEvent, navigation }) => {
             <View
               style={{
                 gap: 5,
-                backgroundColor: "#E8E8E8",
+                // backgroundColor: "#E8E8E8",
               }}
             >
               {events.map((event, index) => (
@@ -158,6 +162,7 @@ const Activities = ({ currentEvent, navigation }) => {
             </View>
           </View>
         ))}
+
         {currentEvent.value.length > 0 && (
           <EventSummary currentEvent={currentEvent} />
         )}

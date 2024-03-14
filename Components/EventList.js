@@ -158,7 +158,7 @@ const EventList = ({ navigation }) => {
               <View style={stylesEvent.dateBar}>
                 <Text
                   style={[
-                    stylesEvent.txt,
+                    stylesEvent.txtDark,
                     {
                       paddingHorizontal: 10,
                     },
@@ -213,7 +213,7 @@ const EventList = ({ navigation }) => {
                         </View>
 
                         <View>
-                          <Text style={stylesEvent.txt}>
+                          <Text style={stylesEvent.txtDark}>
                             {event.title ? event.title : "No title"}
                           </Text>
                           <Text>{countUniqueUsers(event)} participant</Text>
