@@ -117,7 +117,9 @@ const CreateActivity = ({ route, navigation }) => {
   };
 
   return (
-    <View style={[stylesEvent.container, { paddingHorizontal: 16 }]}>
+    <View
+      style={[stylesEvent.container, { paddingHorizontal: 16, marginTop: 10 }]}
+    >
       {/* Set Title */}
       <View>
         <Text>Title</Text>
@@ -196,7 +198,7 @@ const CreateActivity = ({ route, navigation }) => {
                   position: "absolute",
                   right: 0,
                 },
-                showOpt && { transform: "rotate(180deg)" },
+                showOpt && { transform: [{ rotate: "180deg" }] },
               ]}
             />
           </View>

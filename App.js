@@ -187,7 +187,20 @@ export default function App() {
             })}
             component={CreateEvent}
           />
-          <Stack.Screen name="CreateActivity" component={CreateActivity} />
+          <Stack.Screen
+            options={() => ({
+              title: "Create Activity",
+              headerStyle: {
+                backgroundColor: "#4a69bd",
+                borderWidth: 1,
+                borderColor: "#4a69bd",
+                elevation: 0,
+              },
+              headerTintColor: "white",
+            })}
+            name="CreateActivity"
+            component={CreateActivity}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </EventContext.Provider>
