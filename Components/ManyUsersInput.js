@@ -91,7 +91,7 @@ const ManyUsersInput = ({ users, setUsers, usersValid, getUniqueUsers }) => {
           </TouchableOpacity>
         </View>
         {/* SelectedUsers */}
-        {users.length > 0 && (
+        {/* {users.length > 0 && (
           <View style={{ marginVertical: 5 }}>
             <Text>Selected users:</Text>
             <View style={{ flexDirection: "row", gap: 5, flexWrap: "wrap" }}>
@@ -109,40 +109,52 @@ const ManyUsersInput = ({ users, setUsers, usersValid, getUniqueUsers }) => {
               ))}
             </View>
           </View>
-        )}
-        <FlatList
-          data={allUsers}
-          style={{ backgroundColor: "#F6F6F6", maxHeight: 200 }}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item, index }) => (
-            <View
-              style={{ flexDirection: "row", gap: 10, paddingHorizontal: 10 }}
-            >
+        )} */}
+        <View style={{ flexGrow: 1 }}>
+          <FlatList
+            data={allUsers}
+            style={{ backgroundColor: "#FFFFFF", height: 200 }}
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={() => (
+              <View style={{ height: 1, backgroundColor: "#E0E0E0" }} />
+            )}
+            renderItem={({ item, index }) => (
               <TouchableOpacity
-                style={{ alignItems: "center", justifyContent: "center" }}
+                style={{
+                  flexDirection: "row",
+                  gap: 10,
+                  paddingHorizontal: 10,
+                  backgroundColor: "#F6F6F6",
+                }}
                 onPress={() => updateUsers(item)}
               >
-                {users.includes(item) ? (
-                  <IconMat name="check-box" size={24} color="green" />
-                ) : (
-                  <IconMat
-                    name="check-box-outline-blank"
-                    size={24}
-                    color="black"
-                  />
-                )}
+                <View
+                  style={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  {users.includes(item) ? (
+                    <IconMat name="check-box" size={24} color="green" />
+                  ) : (
+                    <IconMat
+                      name="check-box-outline-blank"
+                      size={24}
+                      color="black"
+                    />
+                  )}
+                </View>
+                <Text
+                  style={{
+                    paddingHorizontal: 5,
+                    paddingVertical: 10,
+                    fontSize: 16,
+                    color: "#333333",
+                  }}
+                >
+                  {item} {item === user && "(You)"}
+                </Text>
               </TouchableOpacity>
-              <Text
-                style={{
-                  paddingHorizontal: 5,
-                  paddingVertical: 10,
-                }}
-              >
-                {item} {item === user && "(You)"}
-              </Text>
-            </View>
-          )}
-        />
+            )}
+          />
+        </View>
       </View>
     </View>
   );
