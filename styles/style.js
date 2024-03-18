@@ -137,6 +137,12 @@ export const stylesEvent = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  setPriceGrp: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 20,
+  },
   textInput: {
     height: 40,
     fontSize: 15,
@@ -182,12 +188,19 @@ export const stylesEvent = StyleSheet.create({
     justifyContent: "space-between",
   },
   btn: {
-    // backgroundColor: "#EFEFEF",
     marginHorizontal: 32,
-    // marginBottom: 10,
     borderRadius: 5,
     padding: 3,
     alignItems: "center",
+  },
+  buyerBtn: {
+    position: "absolute",
+    right: 0,
+    top: 1,
+    padding: 11,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: "gray",
   },
   btnCurrency: {
     position: "absolute",

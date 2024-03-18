@@ -5,47 +5,15 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
-  ScrollView,
 } from "react-native";
 import IconMat from "react-native-vector-icons/MaterialIcons";
 import { stylesEvent } from "../styles/style";
 import { EventContext } from "../context";
 
-const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
-  const { events, user } = useContext(EventContext);
+const ManyUsersInput = ({ users, setUsers, usersValid, getUniqueUsers }) => {
+  const { user } = useContext(EventContext);
   const [allUsers, setAllUsers] = useState([]);
   const [newUser, setNewUser] = useState("");
-
-  // get all unique users from app. Users already taking part in activity show on top
-  const getUniqueUsers = () => {
-    const uniqueUsersSet = new Set(); // holds all unique users
-    const uniqueUsersActivitySet = new Set(); // holds all unique users that are already taking part in activity
-    events.forEach((event) => {
-      event.value.forEach((val) => {
-        if (event.id === id) uniqueUsersActivitySet.add(val.buyer);
-        uniqueUsersSet.add(val.buyer);
-        val.items.forEach((v) => {
-          if (event.id === id) uniqueUsersActivitySet.add(v.receipient);
-          uniqueUsersSet.add(v.receipient);
-        });
-      });
-    });
-    const uniqueUsersArray = Array.from(uniqueUsersSet);
-    // Sort uniqueUsersArray so that users already taking part in activity show on top
-    uniqueUsersArray.sort((a, b) => {
-      if (uniqueUsersActivitySet.has(a) && !uniqueUsersActivitySet.has(b)) {
-        return -1;
-      } else if (
-        !uniqueUsersActivitySet.has(a) &&
-        uniqueUsersActivitySet.has(b)
-      ) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    return uniqueUsersArray;
-  };
 
   // Add new user to AllUsers
   const addUser = () => {

@@ -1,5 +1,11 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { stylesActivitie } from "../styles/style";
 import { stylesEvent } from "../styles/style";
 import { EventContext } from "../context";
@@ -18,7 +24,9 @@ const CreateActivity = ({ route, navigation }) => {
 
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
+
   const [buyer, setBuyer] = useState(user);
+  const [showBuyerList, setShowBuyerList] = useState(false);
 
   // users list recipients
   const [users, setUsers] = useState([]);
@@ -31,7 +39,6 @@ const CreateActivity = ({ route, navigation }) => {
   const [titleValid, setTitleValid] = useState(true);
   const [priceValid, setPriceValid] = useState(true);
   const [buyerValid, setBuyerValid] = useState(true);
-  // const [forWhoValid, setForWhoValid] = useState(true);
   const [usersValid, setUsersValid] = useState(true);
 
   const handleSubmit = () => {
@@ -118,132 +125,223 @@ const CreateActivity = ({ route, navigation }) => {
     });
   };
 
+  // get all unique users from app. Users already taking part in activity show on top
+  const getUniqueUsers = () => {
+    const uniqueUsersSet = new Set(); // holds all unique users
+    const uniqueUsersActivitySet = new Set(); // holds all unique users that are already taking part in activity
+    events.forEach((event) => {
+      event.value.forEach((val) => {
+        if (event.id === id) uniqueUsersActivitySet.add(val.buyer);
+        uniqueUsersSet.add(val.buyer);
+        val.items.forEach((v) => {
+          if (event.id === id) uniqueUsersActivitySet.add(v.receipient);
+          uniqueUsersSet.add(v.receipient);
+        });
+      });
+    });
+    const uniqueUsersArray = Array.from(uniqueUsersSet);
+    // Sort uniqueUsersArray so that users already taking part in activity show on top
+    uniqueUsersArray.sort((a, b) => {
+      if (uniqueUsersActivitySet.has(a) && !uniqueUsersActivitySet.has(b)) {
+        return -1;
+      } else if (
+        !uniqueUsersActivitySet.has(a) &&
+        uniqueUsersActivitySet.has(b)
+      ) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return uniqueUsersArray;
+  };
+
   return (
-    <View
-      style={[stylesEvent.container, { paddingHorizontal: 16, marginTop: 10 }]}
+    <TouchableWithoutFeedback
+      onPress={() => {
+        setShowBuyerList(false);
+        setShowOpt(false);
+      }}
     >
-      {/* Set Title */}
-      <View>
-        <Text>Title</Text>
-        <TextInput
-          underlineColorAndroid="transparent"
-          style={[stylesEvent.textInput, !titleValid && { borderColor: "red" }]}
-          value={title}
-          placeholder="Title..."
-          placeholderTextColor="#BDBDBD"
-          onChangeText={(newText) => setTitle(newText)}
-        />
-      </View>
-
-      {/* Set Buyer */}
-      <View>
-        <Text>Buyer</Text>
-        <TextInput
-          underlineColorAndroid="transparent"
-          style={[stylesEvent.textInput, !buyerValid && { borderColor: "red" }]}
-          value={buyer}
-          placeholder="Buyer..."
-          placeholderTextColor="#BDBDBD"
-          onChangeText={(newBuyer) => setBuyer(newBuyer)}
-        />
-      </View>
-
-      {/* Set Price/split */}
       <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 20,
-        }}
+        style={[
+          stylesEvent.container,
+          { paddingHorizontal: 16, marginTop: 10 },
+        ]}
       >
-        {/* Set Price */}
-        <View style={{ position: "relative", width: "40%" }}>
-          <Text>Price</Text>
+        {/* Set Title */}
+        <View>
+          <Text>Title</Text>
           <TextInput
             underlineColorAndroid="transparent"
             style={[
               stylesEvent.textInput,
-              !priceValid && { borderColor: "red" },
+              !titleValid && { borderColor: "red" },
             ]}
-            value={price}
-            placeholder="Price..."
-            keyboardType="numeric"
+            value={title}
+            placeholder="Title..."
             placeholderTextColor="#BDBDBD"
-            onChangeText={(newPrice) => setPrice(newPrice)}
+            onChangeText={(newText) => setTitle(newText)}
           />
-          <View style={stylesEvent.btnCurrency}>
-            <Text style={{ color: "white" }}>{currency}</Text>
-          </View>
         </View>
-        {/* How to split bill */}
-        <View style={{ flex: 1 }}>
-          <Text>How to split the bill</Text>
-          <TouchableHighlight
-            activeOpacity={0.6}
-            underlayColor="#DDDDDD"
-            style={stylesEvent.textInput}
-            value={price}
-            onPress={() => setShowOpt(!showOpt)}
-          >
-            <View>
-              <Text>{splitOpt.text}</Text>
+
+        {/* Set Buyer */}
+
+        <View>
+          <Text>Buyer</Text>
+          <View style={{ position: "relative" }}>
+            <TextInput
+              underlineColorAndroid="transparent"
+              style={[
+                stylesEvent.textInput,
+                !buyerValid && { borderColor: "red" },
+              ]}
+              onBlur={() => {
+                setShowBuyerList(false);
+              }}
+              onFocus={() => setShowBuyerList(true)}
+              value={buyer}
+              placeholder="Buyer..."
+              placeholderTextColor="#BDBDBD"
+              onChangeText={(newBuyer) => setBuyer(newBuyer)}
+            />
+            <TouchableHighlight
+              activeOpacity={0.6}
+              underlayColor="#DDDDDD"
+              onPress={() => setShowBuyerList(!showBuyerList)}
+              style={stylesEvent.buyerBtn}
+            >
               <AntIcon
                 name="caretdown"
                 size={15}
                 color="black"
-                style={[
-                  {
-                    position: "absolute",
-                    right: 0,
-                  },
-                  showOpt && { transform: [{ rotate: "180deg" }] },
-                ]}
+                style={[showBuyerList && { transform: [{ rotate: "180deg" }] }]}
               />
-            </View>
-          </TouchableHighlight>
-          {showOpt && (
-            <View style={stylesEvent.splitOptionGrp}>
-              {splitOptions.map((opt, i) => (
-                <TouchableHighlight
-                  activeOpacity={0.6}
-                  underlayColor="#DDDDDD"
-                  key={i}
-                  style={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 15,
-                    borderWidth: 0.5,
-                  }}
-                  onPress={() => {
-                    setShowOpt(false);
-                    setSplitOpt(opt);
-                  }}
-                >
-                  <Text>{opt.text}</Text>
-                </TouchableHighlight>
-              ))}
-            </View>
-          )}
+            </TouchableHighlight>
+
+            {/* List of users */}
+            {showBuyerList && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: 40,
+                  right: 0,
+                  zIndex: 1,
+                  width: "100%",
+                  backgroundColor: "lightgray",
+                }}
+              >
+                {getUniqueUsers().map((user, i) => (
+                  <TouchableHighlight
+                    key={i}
+                    activeOpacity={0.6}
+                    underlayColor="#DDDDDD"
+                    style={{ paddingVertical: 5, paddingHorizontal: 10 }}
+                    onPress={() => {
+                      setBuyer(user);
+                      setShowBuyerList(!showBuyerList);
+                    }}
+                  >
+                    <View>
+                      <Text>{user}</Text>
+                    </View>
+                  </TouchableHighlight>
+                ))}
+              </View>
+            )}
+          </View>
         </View>
+
+        {/* Set Price/split */}
+        <View style={stylesEvent.setPriceGrp}>
+          {/* Set Price */}
+          <View style={{ position: "relative", width: "40%" }}>
+            <Text>Price</Text>
+            <TextInput
+              underlineColorAndroid="transparent"
+              style={[
+                stylesEvent.textInput,
+                !priceValid && { borderColor: "red" },
+              ]}
+              value={price}
+              placeholder="Price..."
+              keyboardType="numeric"
+              placeholderTextColor="#BDBDBD"
+              onChangeText={(newPrice) => setPrice(newPrice)}
+            />
+            <View style={stylesEvent.btnCurrency}>
+              <Text style={{ color: "white" }}>{currency}</Text>
+            </View>
+          </View>
+          {/* How to split bill */}
+          <View style={{ flex: 1 }}>
+            <Text>How to split the bill</Text>
+            <TouchableHighlight
+              activeOpacity={0.6}
+              underlayColor="#DDDDDD"
+              style={stylesEvent.textInput}
+              value={price}
+              onPress={() => setShowOpt(!showOpt)}
+            >
+              <View>
+                <Text>{splitOpt.text}</Text>
+                <AntIcon
+                  name="caretdown"
+                  size={15}
+                  color="black"
+                  style={[
+                    {
+                      position: "absolute",
+                      right: 0,
+                    },
+                    showOpt && { transform: [{ rotate: "180deg" }] },
+                  ]}
+                />
+              </View>
+            </TouchableHighlight>
+            {showOpt && (
+              <View style={stylesEvent.splitOptionGrp}>
+                {splitOptions.map((opt, i) => (
+                  <TouchableHighlight
+                    activeOpacity={0.6}
+                    underlayColor="#DDDDDD"
+                    key={i}
+                    style={{
+                      paddingVertical: 10,
+                      paddingHorizontal: 15,
+                      borderWidth: 0.5,
+                    }}
+                    onPress={() => {
+                      setShowOpt(false);
+                      setSplitOpt(opt);
+                    }}
+                  >
+                    <Text>{opt.text}</Text>
+                  </TouchableHighlight>
+                ))}
+              </View>
+            )}
+          </View>
+        </View>
+
+        {/* Include forWhoValid */}
+        <ManyUsersInput
+          users={users}
+          setUsers={setUsers}
+          usersValid={usersValid}
+          getUniqueUsers={getUniqueUsers}
+        />
+
+        <TouchableHighlight
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          style={[stylesActivitie.button, { marginTop: 20 }]}
+          onPress={handleSubmit}
+        >
+          <Text style={stylesActivitie.btnText}>CREATE</Text>
+        </TouchableHighlight>
       </View>
-
-      {/* Include forWhoValid */}
-      <ManyUsersInput
-        id={id}
-        users={users}
-        setUsers={setUsers}
-        usersValid={usersValid}
-      />
-
-      <TouchableHighlight
-        activeOpacity={0.6}
-        underlayColor="#DDDDDD"
-        style={[stylesActivitie.button, { marginTop: 20 }]}
-        onPress={handleSubmit}
-      >
-        <Text style={stylesActivitie.btnText}>CREATE</Text>
-      </TouchableHighlight>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
