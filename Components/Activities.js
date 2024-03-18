@@ -116,6 +116,10 @@ const Activities = ({ currentEvent, navigation }) => {
                           opacity: 0.6,
                           backgroundColor: "lightgray",
                         },
+                        event.items.length - 1 === j && {
+                          borderBottomLeftRadius: 10,
+                          borderBottomRightRadius: 10,
+                        },
                       ]}
                     >
                       <View
