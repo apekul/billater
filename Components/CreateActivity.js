@@ -283,7 +283,13 @@ const CreateActivity = ({ route, navigation }) => {
               <TouchableHighlight
                 activeOpacity={0.6}
                 underlayColor="#DDDDDD"
-                style={stylesEvent.textInput}
+                style={[
+                  stylesEvent.textInput,
+                  showOpt && {
+                    borderBottomLeftRadius: 0,
+                    borderBottomRightRadius: 0,
+                  },
+                ]}
                 value={price}
                 onPress={() => setShowOpt(!showOpt)}
               >
@@ -312,8 +318,9 @@ const CreateActivity = ({ route, navigation }) => {
                       key={i}
                       style={{
                         paddingVertical: 10,
-                        paddingHorizontal: 15,
-                        borderWidth: 0.5,
+                        paddingHorizontal: 10,
+                        borderWidth: 1,
+                        borderColor: "#E8E8E8",
                       }}
                       onPress={() => {
                         setShowOpt(false);

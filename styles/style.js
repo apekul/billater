@@ -124,9 +124,9 @@ export const stylesEvent = StyleSheet.create({
   },
   splitOptionGrp: {
     position: "absolute",
-    top: 60,
+    top: 58,
     zIndex: 1,
-    backgroundColor: "#dddddd",
+    backgroundColor: "#F6F6F6",
     width: "100%",
     shadowColor: "#000",
     shadowOffset: {
