@@ -51,16 +51,15 @@ const Activities = ({ currentEvent, navigation }) => {
 
   return (
     <View style={stylesActivitie.container}>
-      <Text style={[stylesActivitie.txtBold, { paddingHorizontal: 16 }]}>
-        Activities:
-      </Text>
-
       {/* List */}
       <ScrollView
         style={{
           paddingHorizontal: 16,
         }}
       >
+        <Text style={[stylesActivitie.txtBold, { paddingVertical: 16 }]}>
+          Activities:
+        </Text>
         {Object.entries(groupedAct).map(([buyer, events], i) => (
           <View key={i} style={stylesActivitie.actGroup}>
             <View
@@ -88,7 +87,7 @@ const Activities = ({ currentEvent, navigation }) => {
                 total spend{" "}
                 {events.map((event, index) => (
                   <Text key={index}>
-                    {event.total}
+                    {Number(event.total).toFixed(2)}
                     <Text style={{ fontSize: 12 }}> {currency}</Text>
                   </Text>
                 ))}

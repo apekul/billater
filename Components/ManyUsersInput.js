@@ -16,19 +16,35 @@ const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [newUser, setNewUser] = useState("");
 
-  // get all users taking part in activity
+  // get all unique users from app. Users already taking part in activity show on top
   const getUniqueUsers = () => {
-    const currentEvent = events.find((v) => v.id === id);
-    const uniqueUsersSet = new Set();
-    // Iterate over each 'value' object
-    currentEvent.value.forEach((val) => {
-      // Add buyer and recipient to the set
-      uniqueUsersSet.add(val.buyer);
-      val.items.forEach((v) => {
-        uniqueUsersSet.add(v.receipient);
+    const uniqueUsersSet = new Set(); // holds all unique users
+    const uniqueUsersActivitySet = new Set(); // holds all unique users that are already taking part in activity
+    events.forEach((event) => {
+      event.value.forEach((val) => {
+        if (event.id === id) uniqueUsersActivitySet.add(val.buyer);
+        uniqueUsersSet.add(val.buyer);
+        val.items.forEach((v) => {
+          if (event.id === id) uniqueUsersActivitySet.add(v.receipient);
+          uniqueUsersSet.add(v.receipient);
+        });
       });
     });
-    return Array.from(uniqueUsersSet);
+    const uniqueUsersArray = Array.from(uniqueUsersSet);
+    // Sort uniqueUsersArray so that users already taking part in activity show on top
+    uniqueUsersArray.sort((a, b) => {
+      if (uniqueUsersActivitySet.has(a) && !uniqueUsersActivitySet.has(b)) {
+        return -1;
+      } else if (
+        !uniqueUsersActivitySet.has(a) &&
+        uniqueUsersActivitySet.has(b)
+      ) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return uniqueUsersArray;
   };
 
   // Add new user to AllUsers
@@ -60,7 +76,7 @@ const ManyUsersInput = ({ id, users, setUsers, usersValid }) => {
 
   return (
     <View>
-      <Text>Check existing users or add new one</Text>
+      <Text>Select existing user or add new one</Text>
       <View
         style={[
           !usersValid && {

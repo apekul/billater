@@ -9,7 +9,7 @@ import ManyUsersInput from "./ManyUsersInput";
 
 const splitOptions = [
   { id: 1, text: "Split full price evenly" },
-  { id: 2, text: "Everyone same price value" },
+  { id: 2, text: "Everyone same price" },
 ];
 
 const CreateActivity = ({ route, navigation }) => {
@@ -55,12 +55,14 @@ const CreateActivity = ({ route, navigation }) => {
   };
 
   const addNewAct = (eventId, buyer, title, price, recipient) => {
-    const clacPrice = () => (splitOpt.id === 1 ? price / users.length : price);
+    const clacPrice = Number(
+      splitOpt.id === 1 ? price / users.length : price
+    ).toFixed(2);
     const newSubID = uuidv4();
     const newItem = {
       id: newSubID,
       name: title,
-      price: clacPrice().toFixed(2),
+      price: clacPrice,
       receipient: recipient,
       settle: buyer === recipient ? true : false,
     };
@@ -86,7 +88,7 @@ const CreateActivity = ({ route, navigation }) => {
                     return {
                       ...val,
                       items: [...val.items, newItem],
-                      total: (+val.total + +clacPrice()).toString(), // Update total
+                      total: (+val.total + +clacPrice).toString(), // Update total
                     };
                   } else {
                     // If the item exists, return the original value without modification
@@ -103,7 +105,7 @@ const CreateActivity = ({ route, navigation }) => {
               id: newActID,
               buyer: buyer,
               items: [newItem],
-              total: clacPrice(),
+              total: clacPrice,
             };
             return {
               ...event,
@@ -133,7 +135,20 @@ const CreateActivity = ({ route, navigation }) => {
         />
       </View>
 
-      {/* Set Buyer/for */}
+      {/* Set Buyer */}
+      <View>
+        <Text>Buyer</Text>
+        <TextInput
+          underlineColorAndroid="transparent"
+          style={[stylesEvent.textInput, !buyerValid && { borderColor: "red" }]}
+          value={buyer}
+          placeholder="Buyer..."
+          placeholderTextColor="#BDBDBD"
+          onChangeText={(newBuyer) => setBuyer(newBuyer)}
+        />
+      </View>
+
+      {/* Set Price/split */}
       <View
         style={{
           flexDirection: "row",
@@ -142,22 +157,8 @@ const CreateActivity = ({ route, navigation }) => {
           gap: 20,
         }}
       >
-        <View style={{ flex: 1 }}>
-          <Text>Buyer</Text>
-          <TextInput
-            underlineColorAndroid="transparent"
-            style={[
-              stylesEvent.textInput,
-              !buyerValid && { borderColor: "red" },
-            ]}
-            value={buyer}
-            placeholder="Buyer..."
-            placeholderTextColor="#BDBDBD"
-            onChangeText={(newBuyer) => setBuyer(newBuyer)}
-          />
-        </View>
         {/* Set Price */}
-        <View style={{ flex: 1, position: "relative" }}>
+        <View style={{ position: "relative", width: "40%" }}>
           <Text>Price</Text>
           <TextInput
             underlineColorAndroid="transparent"
@@ -175,57 +176,57 @@ const CreateActivity = ({ route, navigation }) => {
             <Text style={{ color: "white" }}>{currency}</Text>
           </View>
         </View>
+        {/* How to split bill */}
+        <View style={{ flex: 1 }}>
+          <Text>How to split the bill</Text>
+          <TouchableHighlight
+            activeOpacity={0.6}
+            underlayColor="#DDDDDD"
+            style={stylesEvent.textInput}
+            value={price}
+            onPress={() => setShowOpt(!showOpt)}
+          >
+            <View>
+              <Text>{splitOpt.text}</Text>
+              <AntIcon
+                name="caretdown"
+                size={15}
+                color="black"
+                style={[
+                  {
+                    position: "absolute",
+                    right: 0,
+                  },
+                  showOpt && { transform: [{ rotate: "180deg" }] },
+                ]}
+              />
+            </View>
+          </TouchableHighlight>
+          {showOpt && (
+            <View style={stylesEvent.splitOptionGrp}>
+              {splitOptions.map((opt, i) => (
+                <TouchableHighlight
+                  activeOpacity={0.6}
+                  underlayColor="#DDDDDD"
+                  key={i}
+                  style={{
+                    paddingVertical: 10,
+                    paddingHorizontal: 15,
+                    borderWidth: 0.5,
+                  }}
+                  onPress={() => {
+                    setShowOpt(false);
+                    setSplitOpt(opt);
+                  }}
+                >
+                  <Text>{opt.text}</Text>
+                </TouchableHighlight>
+              ))}
+            </View>
+          )}
+        </View>
       </View>
 
-      {/* How to split bill */}
-      <View>
-        <Text>How to split the bill</Text>
-        <TouchableHighlight
-          activeOpacity={0.6}
-          underlayColor="#DDDDDD"
-          style={stylesEvent.textInput}
-          value={price}
-          onPress={() => setShowOpt(!showOpt)}
-        >
-          <View>
-            <Text>{splitOpt.text}</Text>
-            <AntIcon
-              name="caretdown"
-              size={15}
-              color="black"
-              style={[
-                {
-                  position: "absolute",
-                  right: 0,
-                },
-                showOpt && { transform: [{ rotate: "180deg" }] },
-              ]}
-            />
-          </View>
-        </TouchableHighlight>
-        {showOpt && (
-          <View style={stylesEvent.splitOptionGrp}>
-            {splitOptions.map((opt, i) => (
-              <TouchableHighlight
-                activeOpacity={0.6}
-                underlayColor="#DDDDDD"
-                key={i}
-                style={{
-                  paddingVertical: 10,
-                  paddingHorizontal: 15,
-                  borderWidth: 0.5,
-                }}
-                onPress={() => {
-                  setShowOpt(false);
-                  setSplitOpt(opt);
-                }}
-              >
-                <Text>{opt.text}</Text>
-              </TouchableHighlight>
-            ))}
-          </View>
-        )}
-      </View>
       {/* Include forWhoValid */}
       <ManyUsersInput
         id={id}

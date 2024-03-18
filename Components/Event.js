@@ -16,13 +16,13 @@ const Event = ({ route, navigation }) => {
       return acc;
     }, 0);
 
-    return totalSum;
+    return totalSum.toFixed(2);
   };
 
   // add edit func to event (change title, date)
   return (
     <SafeAreaView style={[stylesEvent.container]}>
-      <View style={{ gap: 10, flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
