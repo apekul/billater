@@ -98,7 +98,8 @@ export const stylesEvent = StyleSheet.create({
   container: {
     flex: 1,
     // marginTop: 10,
-    gap: 10,
+    // gap: 10,
+    position: "relative",
     backgroundColor: "#FDFDFD",
   },
   eventGrp: {

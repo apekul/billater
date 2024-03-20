@@ -26,6 +26,7 @@ const EventList = ({ navigation }) => {
     return acc;
   }, {});
 
+  // console.log(groupedItems);
   // Sort date
   // const groupedItemsArray = Object.entries(groupedItems)
   //   .map(([date, events]) => ({ date, events }))

@@ -1,14 +1,17 @@
-import React, { useContext } from "react";
-import { Text, View, SafeAreaView } from "react-native";
+import React, { useContext, useLayoutEffect, useState } from "react";
+import { Text, View, SafeAreaView, TouchableOpacity } from "react-native";
 import moment from "moment";
 import { EventContext } from "../context";
 import { stylesEvent } from "../styles/style";
 import Activities from "./Activities";
+import IconSetting from "react-native-vector-icons/Ionicons";
+import SettingsEvent from "./SettingsEvent";
 
 const Event = ({ route, navigation }) => {
   const { events, currency } = useContext(EventContext);
   const { id } = route.params;
   const currentEvent = events.find((e) => e.id === id);
+  const [showSettings, setShowSettings] = useState(false);
 
   const calculateTotalSum = () => {
     const totalSum = currentEvent.value.reduce((acc, curr) => {
@@ -19,9 +22,36 @@ const Event = ({ route, navigation }) => {
     return totalSum.toFixed(2);
   };
 
-  // add edit func to event (change title, date)
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ flexDirection: "row", gap: 10 }}
+          onPress={() => setShowSettings((prev) => !prev)}
+        >
+          {showSettings && <Text style={{ color: "white" }}>Cancel</Text>}
+          <IconSetting
+            name={showSettings ? "close-sharp" : "settings-sharp"}
+            size={20}
+            color="white"
+            style={{ marginRight: 20 }}
+            onPress={() => setShowSettings((prev) => !prev)}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, showSettings]);
+
   return (
     <SafeAreaView style={[stylesEvent.container]}>
+      {/* Settings */}
+      {showSettings && (
+        <SettingsEvent
+          navigation={navigation}
+          currentEvent={currentEvent}
+          setShowSettings={setShowSettings}
+        />
+      )}
       <View style={{ flex: 1 }}>
         <View
           style={{

@@ -13,7 +13,6 @@ const CreateEvent = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState("");
   const [openDate, setOpenDate] = useState(false);
-  const [whoPays, setWhoPays] = useState(user);
   const newID = uuidv4();
 
   const onChange = (event, selectedDate) => {
@@ -73,20 +72,9 @@ const CreateEvent = ({ navigation }) => {
             value={date}
             is24Hour={true}
             onChange={onChange}
+            maximumDate={new Date()}
           />
         )}
-      </View>
-
-      <View>
-        <Text>Who pays</Text>
-        <TextInput
-          underlineColorAndroid="transparent"
-          style={stylesEvent.textInput}
-          value={whoPays}
-          placeholder="Who pays..."
-          placeholderTextColor="#BDBDBD"
-          onChangeText={(newText) => setWhoPays(newText)}
-        />
       </View>
 
       <TouchableHighlight
