@@ -87,8 +87,6 @@ export const stylesHome = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 25,
     marginTop: 10,
-    // paddingBottom: 20,
-    // paddingTop: 10,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -97,8 +95,6 @@ export const stylesHome = StyleSheet.create({
 export const stylesEvent = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: 10,
-    // gap: 10,
     position: "relative",
     backgroundColor: "#FDFDFD",
   },

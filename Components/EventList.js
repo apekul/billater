@@ -26,16 +26,13 @@ const EventList = ({ navigation }) => {
     return acc;
   }, {});
 
-  // console.log(groupedItems);
-  // Sort date
-  // const groupedItemsArray = Object.entries(groupedItems)
-  //   .map(([date, events]) => ({ date, events }))
-  //   .sort((a, b) => {
-  //     return (
-  //       moment(a.date, "MMMM Do YYYY").toDate() -
-  //       moment(b.date, "MMMM Do YYYY").toDate()
-  //     );
-  //   });
+  // Convert the object to an array and sort by date in key
+  const dataMap = new Map(
+    Object.entries(groupedItems).sort(
+      (a, b) => moment(b[0], "MMMM Do YYYY") - moment(a[0], "MMMM Do YYYY")
+    )
+  );
+
   const calculateTotalSum = (currentEvent) => {
     const totalSum = currentEvent.value.reduce((acc, curr) => {
       acc += +curr.total;
@@ -153,9 +150,10 @@ const EventList = ({ navigation }) => {
       )}
       {/* Event */}
       <ScrollView style={{ paddingHorizontal: 16 }}>
+        {/* Object.entries(groupedItems).map(([date, events], i) => ( */}
         {events.length > 0 ? (
-          Object.entries(groupedItems).map(([date, events], i) => (
-            <View key={i} style={{ marginVertical: 10 }}>
+          Array.from(dataMap, ([date, events]) => (
+            <View key={date} style={{ marginVertical: 10 }}>
               <View style={stylesEvent.dateBar}>
                 <Text
                   style={[

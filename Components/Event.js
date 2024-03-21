@@ -87,7 +87,6 @@ const Event = ({ route, navigation }) => {
             <Text style={[stylesEvent.txtLight]}>Total money spend</Text>
           </View>
         </View>
-
         {currentEvent !== undefined && (
           <Activities currentEvent={currentEvent} navigation={navigation} />
         )}
