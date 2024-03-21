@@ -8,9 +8,7 @@ import {
 } from "react-native";
 import IconMat from "react-native-vector-icons/MaterialIcons";
 import { stylesActivitie } from "../styles/style";
-import MateralCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { EventContext } from "../context";
-import EventSummary from "./EventSummary";
 
 const Activities = ({ currentEvent, navigation }) => {
   const { setEvents, currency, user } = useContext(EventContext);
@@ -50,18 +48,24 @@ const Activities = ({ currentEvent, navigation }) => {
   }, {});
 
   return (
-    <View style={stylesActivitie.container}>
+    <View style={[stylesActivitie.container]}>
       {/* List */}
       <ScrollView
         style={{
           paddingHorizontal: 16,
         }}
       >
-        <Text style={[stylesActivitie.txtBold, { paddingVertical: 16 }]}>
-          Activities:
-        </Text>
         {Object.entries(groupedAct).map(([buyer, events], i) => (
-          <View key={i} style={stylesActivitie.actGroup}>
+          <View
+            key={i}
+            style={[
+              stylesActivitie.actGroup,
+              Object.entries(groupedAct).length === i + 1 && {
+                marginBottom: 100,
+              },
+              { marginTop: 10 },
+            ]}
+          >
             <View
               style={[
                 stylesActivitie.group,
@@ -165,78 +169,7 @@ const Activities = ({ currentEvent, navigation }) => {
             </View>
           </View>
         ))}
-
-        {currentEvent?.value.length > 0 && (
-          <EventSummary currentEvent={currentEvent} />
-        )}
       </ScrollView>
-
-      <View
-        style={{
-          position: "absolute",
-          bottom: 5,
-          right: 5,
-        }}
-      >
-        {/* Arrow pointing at Add button */}
-        {currentEvent.value.length <= 0 && (
-          <View
-            style={{
-              position: "absolute",
-              bottom: 70,
-              right: 80,
-              flexDirection: "row",
-            }}
-          >
-            <Text
-              style={{
-                backgroundColor: "lightgray",
-                padding: 5,
-                borderRadius: 10,
-              }}
-            >
-              Press button to add new Activity to the Event
-            </Text>
-            <MateralCIcon name="arrow-down-right" size={60} color="#5DB075" />
-          </View>
-        )}
-
-        {/* Add new Act */}
-        <TouchableHighlight
-          activeOpacity={0.6}
-          underlayColor="transparent" // Make underlay color transparent
-          onPress={() => {
-            return navigation.navigate("CreateActivity", {
-              id: currentEvent.id,
-            });
-          }}
-        >
-          <View
-            style={{
-              position: "relative",
-              alignItems: "center",
-            }}
-          >
-            <IconMat
-              name="add-box"
-              size={90}
-              color="#5DB075"
-              style={{
-                zIndex: 1,
-              }}
-            />
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                top: 15,
-                backgroundColor: "white",
-                position: "absolute",
-              }}
-            ></View>
-          </View>
-        </TouchableHighlight>
-      </View>
     </View>
   );
 };

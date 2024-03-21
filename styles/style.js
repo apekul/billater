@@ -159,6 +159,11 @@ export const stylesEvent = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
+  tabGrp: {
+    flex: 1,
+    alignItems: "center",
+    padding: 8,
+  },
   txtLight: {
     color: colors.txtLight,
     fontWeight: "bold",
@@ -275,7 +280,7 @@ export const stylesActivitie = StyleSheet.create({
     fontSize: 15,
   },
   actGroup: {
-    marginBottom: 20,
+    marginBottom: 10,
     backgroundColor: "#E8E8E8",
     borderRadius: 10,
     shadowColor: "#000",
