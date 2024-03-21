@@ -166,7 +166,7 @@ const Activities = ({ currentEvent, navigation }) => {
           </View>
         ))}
 
-        {currentEvent.value.length > 0 && (
+        {currentEvent?.value.length > 0 && (
           <EventSummary currentEvent={currentEvent} />
         )}
       </ScrollView>

@@ -8,8 +8,8 @@ import { EventContext } from "../context";
 
 const SettingsEvent = ({ currentEvent, setShowSettings, navigation }) => {
   const { events, setEvents } = useContext(EventContext);
-  const [title, setTitle] = useState(currentEvent.title);
-  const [date, setDate] = useState(new Date(currentEvent.date));
+  const [title, setTitle] = useState(currentEvent?.title);
+  const [date, setDate] = useState(new Date(currentEvent?.date));
   const [openDate, setOpenDate] = useState(false);
 
   const updateEvent = () => {

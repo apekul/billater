@@ -14,12 +14,12 @@ const Event = ({ route, navigation }) => {
   const [showSettings, setShowSettings] = useState(false);
 
   const calculateTotalSum = () => {
-    const totalSum = currentEvent.value.reduce((acc, curr) => {
+    const totalSum = currentEvent?.value.reduce((acc, curr) => {
       acc += +curr.total;
       return acc;
     }, 0);
 
-    return totalSum.toFixed(2);
+    return totalSum?.toFixed(2);
   };
 
   useLayoutEffect(() => {
@@ -68,10 +68,10 @@ const Event = ({ route, navigation }) => {
             }}
           >
             <Text style={[stylesEvent.txtLight, { fontSize: 20 }]}>
-              {currentEvent.title ? currentEvent.title : "No title"}
+              {currentEvent?.title ? currentEvent?.title : "No title"}
             </Text>
             <Text style={stylesEvent.txtLight}>
-              {moment(currentEvent.date).format("MMMM Do YYYY")}
+              {moment(currentEvent?.date).format("MMMM Do YYYY")}
             </Text>
           </View>
           <View
@@ -87,7 +87,10 @@ const Event = ({ route, navigation }) => {
             <Text style={[stylesEvent.txtLight]}>Total money spend</Text>
           </View>
         </View>
-        <Activities currentEvent={currentEvent} navigation={navigation} />
+
+        {currentEvent !== undefined && (
+          <Activities currentEvent={currentEvent} navigation={navigation} />
+        )}
       </View>
     </SafeAreaView>
   );
