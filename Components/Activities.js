@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import IconMat from "react-native-vector-icons/MaterialIcons";
 import { stylesActivitie } from "../styles/style";
-import { stylesEvent } from "../styles/style";
+import MateralCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { EventContext } from "../context";
 import EventSummary from "./EventSummary";
 
@@ -171,46 +171,72 @@ const Activities = ({ currentEvent, navigation }) => {
         )}
       </ScrollView>
 
-      {/* Add new Act */}
-      <TouchableHighlight
-        activeOpacity={0.6}
-        underlayColor="transparent" // Make underlay color transparent
+      <View
         style={{
           position: "absolute",
           bottom: 5,
           right: 5,
         }}
-        onPress={() => {
-          return navigation.navigate("CreateActivity", {
-            id: currentEvent.id,
-          });
-        }}
       >
-        <View
-          style={{
-            position: "relative",
-            alignItems: "center",
-          }}
-        >
-          <IconMat
-            name="add-box"
-            size={90}
-            color="#5DB075"
-            style={{
-              zIndex: 1,
-            }}
-          />
+        {/* Arrow pointing at Add button */}
+        {currentEvent.value.length <= 0 && (
           <View
             style={{
-              width: 60,
-              height: 60,
-              top: 15,
-              backgroundColor: "white",
               position: "absolute",
+              bottom: 70,
+              right: 80,
+              flexDirection: "row",
             }}
-          ></View>
-        </View>
-      </TouchableHighlight>
+          >
+            <Text
+              style={{
+                backgroundColor: "lightgray",
+                padding: 5,
+                borderRadius: 10,
+              }}
+            >
+              Press button to add new Activity to the Event
+            </Text>
+            <MateralCIcon name="arrow-down-right" size={60} color="#5DB075" />
+          </View>
+        )}
+
+        {/* Add new Act */}
+        <TouchableHighlight
+          activeOpacity={0.6}
+          underlayColor="transparent" // Make underlay color transparent
+          onPress={() => {
+            return navigation.navigate("CreateActivity", {
+              id: currentEvent.id,
+            });
+          }}
+        >
+          <View
+            style={{
+              position: "relative",
+              alignItems: "center",
+            }}
+          >
+            <IconMat
+              name="add-box"
+              size={90}
+              color="#5DB075"
+              style={{
+                zIndex: 1,
+              }}
+            />
+            <View
+              style={{
+                width: 60,
+                height: 60,
+                top: 15,
+                backgroundColor: "white",
+                position: "absolute",
+              }}
+            ></View>
+          </View>
+        </TouchableHighlight>
+      </View>
     </View>
   );
 };
