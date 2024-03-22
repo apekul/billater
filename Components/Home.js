@@ -49,7 +49,7 @@ const Home = ({ navigation }) => {
     setBalance((prev) => ({
       balance: {
         ...prev.balance,
-        value: balanceValue,
+        value: balanceValue.toFixed(2),
       },
       owe: { ...prev.owe, value: oweValue },
       owes: { ...prev.owes, value: owesValue },
