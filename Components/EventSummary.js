@@ -48,11 +48,68 @@ const EventSummary = ({ currentEvent }) => {
 
     return summary;
   };
+  const WhoOwesWho = () => {
+    let summary = {};
+    let history = [];
+
+    currentEvent.value.forEach((value) => {
+      value.items.forEach((item) => {
+        let key1 = `${item.receipient} owes ${value.buyer}`;
+        let key2 = `${value.buyer} owes ${item.receipient}`;
+
+        history.push({
+          transaction: `${value.buyer} paid ${item.price} for ${item.receipient}`,
+          settle: item.settle,
+        });
+
+        if (!summary[key2]) {
+          if (summary[key1]) {
+            summary[key1] = {
+              amount: summary[key1]
+                ? summary[key1].amount + parseFloat(item.price)
+                : parseFloat(item.price),
+              settle: item.settle,
+            };
+          } else {
+            summary[key1] = {
+              amount: parseFloat(item.price),
+              settle: item.settle,
+            };
+          }
+        } else {
+          summary[key2].amount -= parseFloat(item.price);
+
+          if (summary[key2].amount <= 0) {
+            delete summary[key2];
+          }
+        }
+      });
+    });
+
+    return { summary, history };
+  };
+  const { summary, history } = WhoOwesWho();
   return (
     <View
-      style={{ marginVertical: 10, marginBottom: 60, paddingHorizontal: 16 }}
+      style={{
+        marginVertical: 10,
+        marginBottom: 60,
+        paddingHorizontal: 16,
+        gap: 10,
+      }}
     >
-      <Text style={stylesSummary.header}>Summary</Text>
+      <View>
+        {Object.entries(summary).map(([key, value], index) => (
+          <Text
+            key={index}
+            style={{
+              backgroundColor: value.settle ? "#2ecc71" : "transparent",
+            }}
+          >
+            {`${key}: ${value.amount}`}
+          </Text>
+        ))}
+      </View>
       <View style={stylesSummary.container}>
         <View style={stylesSummary.group}>
           <Text style={stylesSummary.total}>Total money spend:</Text>
@@ -61,38 +118,17 @@ const EventSummary = ({ currentEvent }) => {
             <Text style={{ fontSize: 12 }}> {currency}</Text>
           </Text>
         </View>
-
-        {Object.entries(calculateSummary(currentEvent)).map(
-          ([person, info]) => (
-            <View
-              key={person}
-              style={[
-                stylesSummary.group,
-                info.owes > 0
-                  ? { backgroundColor: "pink" }
-                  : { backgroundColor: "lightgreen" },
-              ]}
-            >
-              <Text style={{ width: 100 }}>{person}</Text>
-              <Text style={{ width: 150, textAlign: "left" }}>
-                Spend: {info.spend}
-                <Text style={{ fontSize: 12 }}> {currency}</Text>
-              </Text>
-              <Text
-                style={{
-                  width: 100,
-                  textAlign: "right",
-                }}
-              >
-                Owes: {info.owes > 0 ? "-" + info.owes : info.owes}
-                <Text style={{ fontSize: 12 }}> {currency}</Text>
-              </Text>
-            </View>
-          )
-        )}
-      </View>
-      <View style={{ marginVertical: 10 }}>
-        <Text>Export to file</Text>
+        {history.map((item, index) => (
+          <Text
+            key={index}
+            style={{
+              backgroundColor: item.settle ? "#2ecc71" : "transparent",
+              paddingHorizontal: 10,
+            }}
+          >
+            {item.transaction}
+          </Text>
+        ))}
       </View>
     </View>
   );

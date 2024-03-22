@@ -108,11 +108,11 @@ const Event = ({ route, navigation }) => {
           <TouchableOpacity
             style={[
               stylesEvent.tabGrp,
-              { backgroundColor: tabDisplay ? "#8395a7" : "white" },
+              { backgroundColor: tabDisplay ? "white" : "#bdc3c7" },
             ]}
             onPress={() => setTabDisplay(true)}
           >
-            <Text style={{ color: tabDisplay ? "white" : "black" }}>
+            <Text style={{ color: tabDisplay ? "black" : "white" }}>
               Activities
             </Text>
           </TouchableOpacity>
@@ -127,11 +127,11 @@ const Event = ({ route, navigation }) => {
           <TouchableOpacity
             style={[
               stylesEvent.tabGrp,
-              { backgroundColor: !tabDisplay ? "#8395a7" : "white" },
+              { backgroundColor: !tabDisplay ? "white" : "#bdc3c7" },
             ]}
             onPress={() => setTabDisplay(false)}
           >
-            <Text style={{ color: !tabDisplay ? "white" : "black" }}>
+            <Text style={{ color: !tabDisplay ? "black" : "white" }}>
               Summary
             </Text>
           </TouchableOpacity>
@@ -154,7 +154,7 @@ const Event = ({ route, navigation }) => {
           }}
         >
           {/* Arrow pointing at Add button */}
-          {currentEvent.value.length <= 0 && (
+          {currentEvent?.value.length <= 0 && (
             <View
               style={{
                 position: "absolute",
