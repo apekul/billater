@@ -1,64 +1,31 @@
-import React, { useContext } from "react";
-import { View, Text } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { stylesSummary } from "../styles/style";
 import { EventContext } from "../context";
 
 const EventSummary = ({ currentEvent }) => {
   const { currency } = useContext(EventContext);
+  const [selectedBuyer, setSelectedBuyer] = useState("");
 
-  const calculateTotalSum = () => {
-    const totalSum = currentEvent.value.reduce((acc, curr) => {
-      acc += +curr.total;
-      return acc;
-    }, 0);
-
-    return totalSum;
-  };
-
-  const calculateSummary = (transaction) => {
-    const summary = {};
-
-    // Iterate through each transaction
-    transaction.value.forEach((order) => {
-      const buyer = order.buyer;
-
-      // Initialize buyer's spend if not present
-      if (!summary[buyer]) {
-        summary[buyer] = { spend: 0, owes: 0 };
-      }
-
-      // Iterate through each item in the order
-      order.items.forEach((item) => {
-        const { price, receipient, settle } = item;
-
-        // Add receipient to summary if not present
-        if (!summary[receipient]) {
-          summary[receipient] = { spend: 0, owes: 0 };
-        }
-
-        // Update owes for receipient
-        if (!settle) {
-          summary[receipient].owes += +price;
-        }
-      });
-
-      // Update buyer's spend for the order
-      summary[buyer].spend += +order.total;
-    });
-
-    return summary;
-  };
   const WhoOwesWho = () => {
     let summary = {};
-    let history = [];
+    let history = {};
 
     currentEvent.value.forEach((value) => {
       value.items.forEach((item) => {
+        if (value.buyer === item.receipient) {
+          return; // Skip this iteration if the buyer is the same as the recipient
+        }
+
         let key1 = `${item.receipient} owes ${value.buyer}`;
         let key2 = `${value.buyer} owes ${item.receipient}`;
 
-        history.push({
-          transaction: `${value.buyer} paid ${item.price} for ${item.receipient}`,
+        if (!history[value.buyer]) {
+          history[value.buyer] = [];
+        }
+
+        history[value.buyer].push({
+          transaction: `Paid ${item.price} ${currency} for ${item.name} ${item.receipient}`,
           settle: item.settle,
         });
 
@@ -106,28 +73,48 @@ const EventSummary = ({ currentEvent }) => {
               backgroundColor: value.settle ? "#2ecc71" : "transparent",
             }}
           >
-            {`${key}: ${value.amount}`}
+            {`${key}: ${value.amount} ${currency}`}
           </Text>
         ))}
       </View>
       <View style={stylesSummary.container}>
         <View style={stylesSummary.group}>
-          <Text style={stylesSummary.total}>Total money spend:</Text>
-          <Text style={stylesSummary.total}>
-            {calculateTotalSum()}
-            <Text style={{ fontSize: 12 }}> {currency}</Text>
-          </Text>
+          <Text style={stylesSummary.total}>Transactions</Text>
         </View>
-        {history.map((item, index) => (
-          <Text
+        {Object.entries(history).map(([buyer, transactions], index) => (
+          <TouchableOpacity
             key={index}
+            onPress={() =>
+              setSelectedBuyer(selectedBuyer === buyer ? null : buyer)
+            }
             style={{
-              backgroundColor: item.settle ? "#2ecc71" : "transparent",
+              flexDirection: "column",
+              marginBottom: 10,
               paddingHorizontal: 10,
             }}
           >
-            {item.transaction}
-          </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+              {buyer} spend{" "}
+              {transactions.reduce(
+                (total, item) =>
+                  total + parseFloat(item.transaction.split(" ")[1]),
+                0
+              )}{" "}
+              {currency} ({transactions.length} transactions)
+            </Text>
+            {buyer === selectedBuyer &&
+              transactions.map((item, index) => (
+                <Text
+                  key={index}
+                  style={{
+                    backgroundColor: item.settle ? "green" : "transparent",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  {item.transaction}
+                </Text>
+              ))}
+          </TouchableOpacity>
         ))}
       </View>
     </View>
