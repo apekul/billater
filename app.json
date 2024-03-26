@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.pampalone.splitapp"
+      "package": "com.pampalone.billater"
     },
     "web": {
       "favicon": "./assets/favicon.png"
