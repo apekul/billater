@@ -16,8 +16,8 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import ManyUsersInput from "./ManyUsersInput";
 
 const splitOptions = [
-  { id: 1, text: "Split full price evenly" },
-  { id: 2, text: "Everyone same price" },
+  { id: 1, text: "Everyone same price" },
+  { id: 2, text: "Split full price evenly" },
 ];
 
 const CreateActivity = ({ route, navigation }) => {

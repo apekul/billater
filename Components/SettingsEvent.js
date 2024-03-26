@@ -68,11 +68,12 @@ const SettingsEvent = ({ currentEvent, setShowSettings, navigation }) => {
       <View
         style={{
           backgroundColor: "white",
-          marginHorizontal: 15,
-          marginVertical: 10,
-          padding: 10,
+          // marginHorizontal: 15,
+          // marginVertical: 10,
+          padding: 15,
           gap: 5,
-          borderRadius: 10,
+          borderBottomLeftRadius: 10,
+          borderBottomRightRadius: 10,
         }}
       >
         <View>

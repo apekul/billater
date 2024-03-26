@@ -3,8 +3,8 @@
     "translucent": true
   },
   "expo": {
-    "name": "splitapp",
-    "slug": "splitapp",
+    "name": "billater",
+    "slug": "billater",
     "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

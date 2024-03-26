@@ -82,7 +82,7 @@ const Activities = ({ currentEvent, navigation }) => {
                 }}
               >
                 <Text style={stylesActivitie.txtBold}>
-                  {buyer} {buyer === user && "(You)"}
+                  {buyer} {buyer === user && "(You) "}
                 </Text>
                 <Text>bought</Text>
               </View>
