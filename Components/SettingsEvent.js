@@ -147,7 +147,7 @@ const SettingsEvent = ({ currentEvent, setShowSettings, navigation }) => {
             style={{
               paddingVertical: 10,
               paddingHorizontal: 10,
-              backgroundColor: "green",
+              backgroundColor: "#5DB075",
               borderRadius: 5,
             }}
             onPress={() => updateEvent()}

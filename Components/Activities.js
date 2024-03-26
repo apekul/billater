@@ -79,7 +79,6 @@ const Activities = ({ currentEvent, navigation }) => {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  gap: 5,
                 }}
               >
                 <Text style={stylesActivitie.txtBold}>
@@ -101,7 +100,6 @@ const Activities = ({ currentEvent, navigation }) => {
             <View
               style={{
                 gap: 5,
-                // backgroundColor: "#E8E8E8",
               }}
             >
               {events.map((event, index) => (

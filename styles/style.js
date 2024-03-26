@@ -180,7 +180,7 @@ export const stylesEvent = StyleSheet.create({
   },
   listUsers: {
     backgroundColor: "#FFFFFF",
-    height: 200,
+    maxHeight: 200,
     position: "absolute",
     top: 40,
     right: 0,
@@ -300,14 +300,20 @@ export const stylesSummary = StyleSheet.create({
     fontWeight: "bold",
   },
   container: {
-    backgroundColor: "lightgray",
-  },
-  group: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 5,
+    backgroundColor: "#F6F6F6",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   total: {
     fontSize: 18,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
 });

@@ -9,7 +9,7 @@ const Home = ({ navigation }) => {
   const [balance, setBalance] = useState({
     balance: { txt: "Total Balance", value: 0, color: "#898A8D", id: 1 },
     owe: { txt: "you owe", value: 0, color: "#EF4F2B", id: 2 },
-    owes: { txt: "owes you", value: 0, color: "#24CE85", id: 3 },
+    owes: { txt: "owes you", value: 0, color: "#5DB075", id: 3 },
   });
   // Calculate total owe
   function sumPriceForRecipient() {
@@ -84,12 +84,7 @@ const Home = ({ navigation }) => {
               </>
             ) : (
               <>
-                <Text
-                  style={[
-                    { fontWeight: "bold" },
-                    v.id === 2 ? { color: "red" } : { color: "#2ecc71" },
-                  ]}
-                >
+                <Text style={{ fontWeight: "bold", color: v.color }}>
                   {v.txt}
                 </Text>
                 <Text style={[stylesHome.txt, { fontWeight: "bold" }]}>

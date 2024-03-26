@@ -128,7 +128,7 @@ const EventList = ({ navigation }) => {
               setSelectedItems([]);
               return setToggleDelete(false);
             }}
-            style={{ backgroundColor: "gray", padding: 5 }}
+            style={{ backgroundColor: "gray", padding: 5, borderRadius: 5 }}
           >
             <Text style={{ color: "white" }}>Cancel</Text>
           </TouchableHighlight>
@@ -141,7 +141,7 @@ const EventList = ({ navigation }) => {
               selectedItems.length <= 0
                 ? { backgroundColor: "lightgray" }
                 : { backgroundColor: "#EF4F2B" },
-              { padding: 5 },
+              { padding: 5, borderRadius: 5 },
             ]}
           >
             <Text style={{ color: "white" }}>Delete Selected</Text>
@@ -150,7 +150,6 @@ const EventList = ({ navigation }) => {
       )}
       {/* Event */}
       <ScrollView style={{ paddingHorizontal: 16 }}>
-        {/* Object.entries(groupedItems).map(([date, events], i) => ( */}
         {events.length > 0 ? (
           Array.from(dataMap, ([date, events]) => (
             <View key={date} style={{ marginVertical: 10 }}>

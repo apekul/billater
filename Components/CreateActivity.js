@@ -190,7 +190,6 @@ const CreateActivity = ({ route, navigation }) => {
               },
             ]}
             onBlur={() => {
-              // setShowBuyerList(false);
               setShowOpt(false);
             }}
             onFocus={() => setShowBuyerList(true)}
