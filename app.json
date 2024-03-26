@@ -4,7 +4,7 @@
   },
   "expo": {
     "name": "billater",
-    "slug": "billater",
+    "slug": "splitapp",
     "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.pampalone.billater"
+      "package": "com.pampalone.splitapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
