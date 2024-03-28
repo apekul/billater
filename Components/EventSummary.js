@@ -27,7 +27,10 @@ const EventSummary = ({ currentEvent }) => {
         history[value.buyer].push({
           transaction: [
             { text: "Paid ", style: {} },
-            { text: `${item.price} `, style: { fontWeight: "bold" } },
+            {
+              text: `${item.price} `,
+              style: { fontWeight: "bold" },
+            },
             { text: `${currency} `, style: { fontWeight: "bold" } },
             { text: `for `, style: {} },
             { text: `${item.name} `, style: {} },

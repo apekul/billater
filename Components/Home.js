@@ -23,7 +23,7 @@ const Home = ({ navigation }) => {
         });
       });
     });
-    return sum;
+    return sum.toFixed(2);
   }
 
   // Calculate total owes
@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
         }
       });
     });
-    return total;
+    return total.toFixed(2);
   };
   useEffect(() => {
     const oweValue = sumPriceForRecipient();

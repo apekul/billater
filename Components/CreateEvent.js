@@ -34,7 +34,7 @@ const CreateEvent = ({ navigation }) => {
     <View
       style={[stylesEvent.container, { paddingHorizontal: 16, marginTop: 10 }]}
     >
-      <View>
+      <View style={{ gap: 5, paddingTop: 5 }}>
         <Text>Event Title</Text>
         <TextInput
           underlineColorAndroid="transparent"
@@ -46,7 +46,7 @@ const CreateEvent = ({ navigation }) => {
         />
       </View>
 
-      <View>
+      <View style={{ gap: 5, paddingTop: 5 }}>
         <Text>Date</Text>
         <TouchableHighlight
           activeOpacity={0.6}

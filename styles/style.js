@@ -121,7 +121,7 @@ export const stylesEvent = StyleSheet.create({
   },
   splitOptionGrp: {
     position: "absolute",
-    top: 58,
+    top: 65,
     zIndex: 1,
     backgroundColor: "#F6F6F6",
     width: "100%",
@@ -139,6 +139,7 @@ export const stylesEvent = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 20,
+    paddingTop: 5,
   },
   textInput: {
     height: 40,

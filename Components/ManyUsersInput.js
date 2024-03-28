@@ -32,18 +32,12 @@ const ManyUsersInput = ({ users, setUsers, usersValid, getUniqueUsers }) => {
         : setUsers((prev) => prev.filter((v) => v !== item));
     }
   };
-
-  // const removeUser = (index) => {
-  //   const removed = users.filter((v, i) => i !== index);
-  //   setUsers(removed);
-  // };
-
   useEffect(() => {
     setAllUsers(getUniqueUsers());
   }, []);
 
   return (
-    <View>
+    <View style={{ gap: 5, paddingTop: 5 }}>
       <Text>Select existing user or add new one</Text>
       <View
         style={[
@@ -90,30 +84,10 @@ const ManyUsersInput = ({ users, setUsers, usersValid, getUniqueUsers }) => {
             <Text style={{ color: "white" }}>Add</Text>
           </TouchableOpacity>
         </View>
-        {/* SelectedUsers */}
-        {/* {users.length > 0 && (
-          <View style={{ marginVertical: 5 }}>
-            <Text>Selected users:</Text>
-            <View style={{ flexDirection: "row", gap: 5, flexWrap: "wrap" }}>
-              {users.map((user, i) => (
-                <Text
-                  key={i}
-                  style={{
-                    backgroundColor: "#E8E8E8",
-                    paddingHorizontal: 5,
-                    paddingVertical: 2,
-                  }}
-                >
-                  {user}
-                </Text>
-              ))}
-            </View>
-          </View>
-        )} */}
         <View style={{ flexGrow: 1 }}>
           <FlatList
             data={allUsers}
-            style={{ backgroundColor: "#FFFFFF", height: 200 }}
+            style={{ backgroundColor: "#FFFFFF", maxHeight: 200 }}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={() => (
               <View style={{ height: 1, backgroundColor: "#E0E0E0" }} />

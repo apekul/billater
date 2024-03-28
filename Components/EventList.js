@@ -39,7 +39,7 @@ const EventList = ({ navigation }) => {
       return acc;
     }, 0);
 
-    return totalSum;
+    return totalSum.toFixed(2);
   };
 
   // Check if payments are settle

@@ -16,8 +16,8 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import ManyUsersInput from "./ManyUsersInput";
 
 const splitOptions = [
-  { id: 1, text: "Everyone same price" },
-  { id: 2, text: "Split full price evenly" },
+  { id: 1, text: "Split full price evenly" },
+  { id: 2, text: "Everyone same price" },
 ];
 
 const CreateActivity = ({ route, navigation }) => {
@@ -162,7 +162,7 @@ const CreateActivity = ({ route, navigation }) => {
       style={[stylesEvent.container, { paddingHorizontal: 16, marginTop: 10 }]}
     >
       {/* Set Title */}
-      <View>
+      <View style={{ gap: 5, paddingTop: 5 }}>
         <Text>Title</Text>
         <TextInput
           underlineColorAndroid="transparent"
@@ -176,7 +176,7 @@ const CreateActivity = ({ route, navigation }) => {
 
       {/* Set Buyer */}
 
-      <View>
+      <View style={{ gap: 5, paddingTop: 5 }}>
         <Text>Buyer</Text>
         <View style={{ position: "relative" }}>
           <TextInput
@@ -200,6 +200,7 @@ const CreateActivity = ({ route, navigation }) => {
           />
           <TouchableHighlight
             activeOpacity={0.6}
+            disabled={getUniqueUsers().length === 0}
             underlayColor="#DDDDDD"
             onPress={() => setShowBuyerList(!showBuyerList)}
             style={stylesEvent.buyerBtn}
@@ -207,7 +208,7 @@ const CreateActivity = ({ route, navigation }) => {
             <AntIcon
               name="caretdown"
               size={15}
-              color="black"
+              color={getUniqueUsers().length === 0 ? "#BDBDBD" : "black"}
               style={[showBuyerList && { transform: [{ rotate: "180deg" }] }]}
             />
           </TouchableHighlight>
@@ -256,7 +257,7 @@ const CreateActivity = ({ route, navigation }) => {
       {/* Set Price/split */}
       <View style={stylesEvent.setPriceGrp}>
         {/* Set Price */}
-        <View style={{ position: "relative", width: "40%" }}>
+        <View style={{ position: "relative", width: "40%", gap: 5 }}>
           <Text>Price</Text>
           <TextInput
             underlineColorAndroid="transparent"
@@ -277,7 +278,7 @@ const CreateActivity = ({ route, navigation }) => {
         {/* How to split bill */}
         <View style={{ flex: 1 }}>
           <TouchableWithoutFeedback onPress={() => setShowOpt(false)}>
-            <View style={{ flex: 1, zIndex: 1 }}>
+            <View style={{ flex: 1, zIndex: 1, gap: 5 }}>
               <Text>How to split the bill</Text>
               <TouchableHighlight
                 activeOpacity={0.6}
