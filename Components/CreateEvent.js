@@ -40,6 +40,7 @@ const CreateEvent = ({ navigation }) => {
           underlineColorAndroid="transparent"
           style={stylesEvent.textInput}
           value={title}
+          maxLength={28}
           placeholder="Event Title..."
           placeholderTextColor="#BDBDBD"
           onChangeText={(newText) => setTitle(newText)}

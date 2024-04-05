@@ -5,6 +5,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TouchableHighlight,
+  LayoutAnimation,
+  Platform,
 } from "react-native";
 import moment from "moment";
 import { EventContext } from "../context";
@@ -77,7 +79,7 @@ const Event = ({ route, navigation }) => {
               paddingHorizontal: 16,
             }}
           >
-            <Text style={[stylesEvent.txtLight, { fontSize: 20 }]}>
+            <Text style={[stylesEvent.txtLight, { fontSize: 16 }]}>
               {currentEvent?.title ? currentEvent?.title : "No title"}
             </Text>
             <Text style={stylesEvent.txtLight}>

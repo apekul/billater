@@ -167,6 +167,7 @@ const CreateActivity = ({ route, navigation }) => {
         <TextInput
           underlineColorAndroid="transparent"
           style={[stylesEvent.textInput, !titleValid && { borderColor: "red" }]}
+          maxLength={28}
           value={title}
           placeholder="Title..."
           placeholderTextColor="#BDBDBD"
@@ -175,7 +176,6 @@ const CreateActivity = ({ route, navigation }) => {
       </View>
 
       {/* Set Buyer */}
-
       <View style={{ gap: 5, paddingTop: 5 }}>
         <Text>Buyer</Text>
         <View style={{ position: "relative" }}>
@@ -194,6 +194,7 @@ const CreateActivity = ({ route, navigation }) => {
             }}
             onFocus={() => setShowBuyerList(true)}
             value={buyer}
+            maxLength={15}
             placeholder="Buyer..."
             placeholderTextColor="#BDBDBD"
             onChangeText={(newBuyer) => setBuyer(newBuyer)}
